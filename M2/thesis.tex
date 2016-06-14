@@ -1,0 +1,66 @@
+% !TXS template
+\documentclass[french, 11pt]{memoir}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[a4paper]{geometry}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{multicol}
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+\usepackage[font={small,it}]{caption}
+%%\usepackage[margin=1.4in]{geometry}
+\usepackage{babel}
+
+%\addto\captionsfrench{% Replace "english" with the language you use
+%	\renewcommand{\contentsname}%
+%	{}%
+%}
+\renewcommand{\printtoctitle}[1]{\Huge \textbf{Table des matières}}
+
+\renewcommand\thefigure{\arabic{figure}}
+\renewcommand\thetable{\arabic{table}}
+\setcounter{figure}{0}
+\renewcommand{\thesection}{\arabic{section}}
+\begin{document}
+
+\title{Mémoire d'alternance, 1ère année \\ \textbf{Master mention Informatique}, mention \textbf{Ingénierie du
+		Logiciel et des Connaissances} 
+	
+	\bigskip
+	{\huge Algorithme génétique, du framework à l'implémentation} \\	
+	}
+\author{Joseph Pallamidessi\\ Université de Strasbourg} 
+\date{\vspace{4.5in}
+	
+\protect\raggedright
+{\normalsize Maître d'alternance:} \\
+		\textbf{Pierre Collet}, Université de Strasbourg \\
+		\textbf{Guillaume Philips}, Synovo SAS}
+
+
+
+\maketitle
+\newpage
+
+\tableofcontents*
+\newpage
+
+\section{Remerciements}\label{remerciements}
+\section{Abstract}\label{introduction}
+\section{Introduction}\label{introduction}
+\section{État de l'art}\label{introduction}
+\section{Recherches locales}\label{introduction}
+\section{Résulats}\label{introduction}
+\section{Discussion}\label{introduction}
+\section{Conclusion}\label{conclusion}
+
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{mémoire}
+
+\end{document}
