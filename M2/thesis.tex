@@ -1,5 +1,5 @@
 % !TXS template
-\documentclass[french, 11pt]{memoir}
+\documentclass[11pt]{memoir}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -14,13 +14,13 @@
 \setcounter{secnumdepth}{3}
 \usepackage[font={small,it}]{caption}
 %%\usepackage[margin=1.4in]{geometry}
-\usepackage{babel}
+%%\usepackage{babel}
 
 %\addto\captionsfrench{% Replace "english" with the language you use
 %	\renewcommand{\contentsname}%
 %	{}%
 %}
-\renewcommand{\printtoctitle}[1]{\Huge \textbf{Table des matières}}
+\renewcommand{\printtoctitle}[1]{\Huge \textbf{Table of Content}}
 
 \renewcommand\thefigure{\arabic{figure}}
 \renewcommand\thetable{\arabic{table}}
@@ -48,9 +48,46 @@
 \tableofcontents*
 \newpage
 
-\section{Remerciements}
+
+\section{Acknowlegments}\label{Acknowledgements}
+
+I would first like to thank professor Collet, for the guidance provided during those
+two year of apprenticeship. It is because of him that today I stand before you,
+having opened to me the wonderful world of universitary research. \\
+Guillaume Philip, my apprenticeship tutor inside Synovo to having me let experiment, test
+and gave full liberty to conduit my research on this problem during the one and a
+half year that I spent inside his company. He was always listening, throughful and
+focus even when the obstacle seemed inreachable. He was flexibility, availability
+and focus are something that I wish to encounter again in my carrier, as it gave me
+the strength to finish this big challenge. \\
+I would like to thanks Synovo and the ICube laboratories for their support and
+letting me work in this big collaboration between university researchers and the
+corporate world.
+
 \section{Abstract}
+We developed a distributed multi-objectives genetic algorithm for solving a special case of
+large vehicle routing for healthcare service. The goal of this algorithm is to
+replace the task of planification for the next day currently done by human operator and with
+minor modification,due to the evolutionary nature of the used techniques, be able to
+done realtime continuous optimization. The problem in itself is highly constrained
+but the search space remais large enough to require heuristics. The help the
+exploitation phase, a set of local searches, the most used in combinatory
+optimization have been reimplemented to take into account the specificities and
+multi-objective nature of the problem. \\
+The optimization must be fast enough with large instance to compete with humans as
+this field is  caracterised by high frequence of modification through the day . In
+order to avoid the traditional computational pitfall of pareto-based selection, a
+novel selection method (G-ASREA) on GPGPU has been succesfully implemented and tested with
+speed-up ranging for 4 to 50 times faster than the NSGAII algorithm while providing
+better population diversity and overall results.
+
 \section{Introduction}
+Planification of large instance remains an open field of research. The particular
+problem of vehicle routing of healthcare service is twofolds : due to its
+various constraints it is difficult to extract to ontology needed for modelizing for
+a linear solver and the sheer number of element to optimize make it out of reach for
+the classical exact algorithm, thus the need of powerful heuristics and
+metaheuristic.
 \subsection{Problem definition}
 
 \subsection{Healthcare transportation specificities}
