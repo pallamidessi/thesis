@@ -1,5 +1,5 @@
 % !TXS template
-\documentclass[11pt]{memoir}
+\documentclass[12pt]{memoir}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -35,7 +35,7 @@
 	{\huge Realtime continous optimisation of healthcare transportation fleets using massively parallele memetic algorithm on GPGPU} \\	
 	}
 \author{Joseph Pallamidessi\\ University of Strasbourg} 
-\date{\vspace{4.0in}
+\date{\vspace{2.5in}
 	
 \protect\raggedright
 {\normalsize Maître d'alternance:} \\
@@ -60,9 +60,19 @@ half year that I spent inside his company. He was always listening, throughful a
 focus even when the obstacle seemed inreachable. He was flexibility, availability
 and focus are something that I wish to encounter again in my carrier, as it gave me
 the strength to finish this big challenge. \\
+Jeremy Wies for my current position of research assistant at Synovo.
+Thibault Thomas for his always optimistic mood and the overall help, on to many things to enumerate here. It was always a pleasure to discuss with him and I formally apologize for having him be me rubber ducks while being stuck on problems. As a true believer of the concept serendipity, many aspect of the current work may have been indirectly influenced by ours discussion. \\  
+Benjamin Chetioui for having be an efficient and resourceful coworker and his numerous inputs in all aspects of this project.
+
+
+\bigskip
+I would like to thanks the pedagogic team of the ILC Master and more specifically M. Narboux, M. Magaud, Mme. Mark-Zwecker for allowing me to have this unorthodox journey through theirs formation, even if it had add a lot of supplementary work on them. \\
 I would like to thanks Synovo and the ICube laboratories for their support and
 letting me work in this big collaboration between university researchers and the
 corporate world.
+Thanks to all my proofreaders and friends for taking the time to help me and theirs overall support during those last two year. \\
+Finally, I wish to thanks the french university and scholastic system for making me able to pursue my eduction.  
+\newpage
 
 \section{Abstract}
 We developed a distributed multi-objectives genetic algorithm for solving a special case of
@@ -80,37 +90,149 @@ order to avoid the traditional computational pitfall of pareto-based selection, 
 novel selection method (G-ASREA) on GPGPU has been succesfully implemented and tested with
 speed-up ranging for 4 to 50 times faster than the NSGAII algorithm while providing
 better population diversity and overall results.
-
+\paragraph{Keywords}
+Evolutionary algorithm, genetic algorithm, local search, GPGPU, NSGA, ASREA, multi-objective optimization, pareto selection, vehicle routing problem with time windows, Pickup-delivery, heterogeneous fleet.
+\newpage
 \section{Introduction}
 Planification of large instance remains an open field of research. The particular
 problem of vehicle routing of healthcare service is twofolds : due to its
 various constraints it is difficult to extract to ontology needed for modelizing for
 a linear solver and the sheer number of element to optimize make it out of reach for
-the classical exact algorithm, thus the need of powerful heuristics and
-metaheuristic.
-\subsection{Problem definition}
+the classical exact algorithm, thus the need of powerful heuristics and 
+metaheuristic. The fields af vehicle routing problem (VRP) is composed of numerous variants, each time defining new constraints. The two most commons one are the Capacited Vehicle Routing Problem (CVRP) and the Vehicle routing problem with time windows (VRPTW).
 
-\subsection{Healthcare transportation specificities}
-\label{sub:Healthcare transportation specificities}
+Definition of CVRP
+Definition of VRPTW
+
+Variant one : heterogeouns fleet
+Variant two : Multi-depot
+
+More constraint -> smaller search space
+
+Distributed 
 
 \section{Context of research}
 \label{sec:Context of research}
+Non automation in this fields of work due to legal constraint and transportation of patient instead of goods
+Our problem:
+Time required to do the planification
+
+\subsection{Problem definition}
+Formal definition
+
+Difficulty of such optimisation : - Vehicle
+- employee
+Quality of result
+-> two objective : load/legal + vehicle/employee
+Patient => quality of service
+
+\subsubsection{Healthcare transportation specificities}
+\label{sub:Healthcare transportation specificities}
+Priority on the quality of services and feasability
+Pauses for employee
+heterogeous fleet
+Pick-up delivery
 
 
-\section{État de l'art}
+\section{State of the project}
+Problem already finally defined 
+Work already done
+Small change => mainly refactoring
+Genetic algorithm working fine 
+In production
+
 \section{Local searches}
-\subsection{Time-window constrained 2-opt*}
+Help the genetic algorithm with a set of local search
+Exploitation/exploration
+\subsection{2-opt* for pickup-delivery}
+The exchange heuristic swaps two visits in differ-
+ent routes. This is pictured in Figure 6. Finally, cross
+is similar to 2-opt {\*}
+proposed by Potvin and Rousseau
+(1995) for VRPTW. Initially, a virtual vehicle, which
+performs the visits not carried out by the real vehi-
+cles, exists. This virtual vehicle is different from the
+real  ones  in  two  respects.  First,  the  virtual  vehicle
+can  make  an  unlimited  number  of  customer  visits.
+Second, the cost incurred by the virtual vehicle when
+it performs a customer visit is typically higher than
+that incurred by a real vehicle.
 \subsubsection{Base algorithm}
-\subsubsection{TW-flavored version}
-\subsection{or-exchange}
+Enhancement of 2-opt
+\subsubsection{PD-flavored version}
+
+\subsection{Intra route}
+Intra Route This heuristic picks two routes randomly and swaps two nodes from each route.
+The nodes are chosen based on the numbers generated randomly. After the
+swapping is done, feasibility is checked for the newly generated routes. If the
+two new routes are acceptable, they will be updated as part of the solution;
+otherwise the original routes will be restored.
 \subsection{RAR}
+Gendreau et al. [42] proposed a RAR (remove and
+reinsert) mutation operator, which extracts a node and inserts it into a random point of
+the routing sequence in order to retain the feasibility of solutions.
 \subsection{Spliting and merging}
+Route splitting and merging, nothing fancy here 
 \subsection{Fuzzing}
 
 \section{Result}
 \subsection{Metrics definitions}
-
+Focus on logistic and feasability : => no hard constraint violated
 \subsection{G-ASREA vs NSGAII}
+\subsubsection{Sélection et ranking : NSGAII et
+	ASREA}\label{suxe9lection-et-ranking-nsgaii-et-asrea}
+
+Une des grosses avancées de ces dernières semaines est le remplacement
+de l'algorithme de sélection \emph{NSGA-II\cite{deb2002fast}} au profit d\emph{'ASREA\cite{sharma2010archived,tsutsui2013massively}}.\\
+\emph{NSGA-II} est de facto l'algorithme de \emph{ranking} et de
+sélection des \emph{MOEA}, avec une complexité asymptotique en O
+(\emph{mn\^{}2}) avec \emph{m} nombre d'objectif et \emph{n} nombre
+d'individu. Les implémentations en \emph{C/C++} de \emph{NSGA-II} sont
+nombreuses, ce qui a justifié son choix dans un premier temps par M.
+Catania.\\
+Avec de grandes tailles de populations (\textgreater{}10 000
+individus), le temps pris par \textit{NSGA-II} devient significatif par
+rapport au reste de l'algorithme. Il se base sur le classement de rang
+selon le principe de \textit{Pareto dominance} déjà évoqué plus haut. J'ai donc
+décidé d'utiliser \textit{ASREA}, un algorithme de \textit{ranking} par archive
+récent et innovant en O (\emph{man}) avec \emph{a} taille de l'archive ,
+et sa variante parallélisée sur \emph{GPU}, \emph{G-ASREA\cite{sharma2010gpgpu}}.
+
+\bigskip
+\emph{NSGA,} comme \emph{ASREA}, propose une gestion de l'élitisme, le
+premier par son classement déterministe de rang et le second par
+l'utilisation d'une archive des meilleurs individus. Une explication
+plus poussée des deux algorithmes est disponible en annexe. \\
+Les accélérations d'\emph{ASREA} et \emph{G-ASREA} sont très
+impressionnantes par rapport à \emph{NSGA-II}.
+\begin{figure}[htbp]
+	\begin{center}
+		%\includegraphics[width=6in]{img/asrea_table.png}
+		\caption{Comparaison des temps et accélérations entre ASREA, NSGA-II et G-ASREA sur une minimisation de fonction ZDT\cite{zitzler2000comparison}.}
+	\end{center}
+\end{figure}
+M. Collet m'a fourni une implémentation pour \textit{GPU} d'\emph{ASREA}. Le
+code de l'algorithme était fortement imbriqué dans un programme de
+benchmarking synthétique de \emph{GA} (\emph{ZDT functions\cite{zitzler2000comparison}}).
+
+Nous avons continuer le travail de parallélisation sur \textit{G-ASREA} pour
+qu'il soit exécuter en sont intégralité sur \textit{GPU}. Après extraction,
+refactoring et adaptation, nous avons pu bénéficier d'accélérations
+répertoriées dans la table suivante :
+
+\begin{center}
+	\begin{tabular}{ |l| c| r| }
+		\hline
+		Nombre d'individu & NSGA-II & G-ASREA \\
+		\hline
+		1024 & 5 ms & 2 ms \\
+		16 384 & 464 ms & 19 ms\\
+		32 768  & 1563 ms& 27 ms\\
+		\hline
+	\end{tabular}
+	\captionof{table}{Temps de la sélection, moyennes sur 50 générations.}
+\end{center}
+
 \subsubsection{Execution time}
 \subsubsection{Quality of results}
 
@@ -119,6 +241,14 @@ metaheuristic.
 \paragraph{Observation}
 
 \subsection{Comparaison against human operators}
+Difficulty to do 
+
+\section{Deployement}
+CPU ok 
+GPU => difficult 
+Docker + AWS 
+
+\section{Role}
 
 \section{Discussion}
 
