@@ -101,21 +101,94 @@ a linear solver and the sheer number of element to optimize make it out of reach
 the classical exact algorithm, thus the need of powerful heuristics and 
 metaheuristic. The fields af vehicle routing problem (VRP) is composed of numerous variants, each time defining new constraints. The two most commons one are the Capacited Vehicle Routing Problem (CVRP) and the Vehicle routing problem with time windows (VRPTW).
 
-Definition of CVRP
-Definition of VRPTW
+\paragraph{CVRP} % (fold)
+\label{par:CVRP}
+In the CVRP variant, the vehicle capacity of "goods" is limited and sometime the
+good must also be package in the correct of delivery, meaning it involve a knapsack
+optimisation once the routing is defined. This problem represent the core of
+logistics and is prevalent in physical goods transportation. This is also the case
+of our problem as theirs is a limited number of seat in the vehicles and some
+limitation concerning the ambulances for example, where theirs can be only one
+patient at once, independantly of the size of the medical crew.
+% paragraph CVRP (end)
+%Definition of CVRP
 
-Variant one : heterogeouns fleet
-Variant two : Multi-depot
+\paragraph{VRPTW} % (fold)
+\label{par:VRPTW}
+In the case of delivery to consumer directly arise the question of the delivery
+timing. The VRPTW is a highly constrained problem where the delivery must occurs
+at specific time window. Depending of the criticality of the delivery, systems tend
+to treat windows with more or less flexibility. In our case, the delay penalty on an
+appointement is weighted its type. The problem definition will be given in much more
+detail in the following section.
+% paragraph VRPTW (end)
+%Definition of VRPTW
 
-More constraint -> smaller search space
+\paragraph{Heterogenous fleet} % (fold)
+\label{par:Heterogenous fleet}
+Problem with heterogenous fleet add a new set of constraints. The cost of using
+the vehicle, its capacity, its crew (the size as well as the diploma and
+authorization required) can depend of the type of vehicle.
+% paragraph Heterogenous fleet (end)
+%Variant one : heterogeouns fleet
 
+\paragraph{Multi-depot} % (fold)
+\label{par:Multi-depot}
+The classical definition of the VRP problem state that theirs are only one depot or
+main station, from which all the vehicle start and must go back after the last
+missions. In the multi-depot variant, the vehicle are assigned to a specific base,
+where they start and end.\\
+% paragraph Multi-depot (end)
+%Variant two : Multi-depot
+
+The more constrained the problem is the smaller the search space will be. This fact
+is easy to demonstrate when graphically solving a linear integer problem with the
+simplex method for example.
+
+%Genetic algorithm 
 Distributed 
 
 \section{Context of research}
 \label{sec:Context of research}
-Non automation in this fields of work due to legal constraint and transportation of patient instead of goods
-Our problem:
-Time required to do the planification
+The main motivation of this research is the automate the whole logistic process of
+transporting patient for a number of reason. Historically healthcare transportation
+services could not use any automation due to the large number of physicals and legal
+constraints, in particular in France where the state subside part of the cost
+depending on various complex conditions. This has render impossible the usage of
+more traditional and top of the shelf solution available for the goods
+transportation industry. Synovo, through its main product Saphir, an ERP-like tool
+to manage the whole transporation company, try to push the full automation of the
+industry. \\
+The last remaining parts still extensibly done by humans operators are planning the
+next day and doing realtime routing and problem solving during the day, two type of
+work that our novel algorithm tackles efficently. The main goals to achieves are the
+following:
+\paragraph{Economic} % (fold)
+\label{par:Economic}
+A good planification that aggresively try to reduce the number of resources used
+(vehicles, drivers, crews) can lead to massive saving for the transporation company
+as well as improving the working condition of the current employee and preserving
+the actual material.
+% paragraph Economic (end)
+\paragraph{Speed} % (fold)
+\label{par:Speed}
+For a small company, the average workload is about 100 to 200 missions (or journeys)
+per day. For planning such day, it take around one hour very focused for a human
+operator or regulator, while he is still interrupted by calls concerning the current
+day. Before having a working planification for the next day, the company can not yet
+tell its drivers and employees the beginning of theirs shifts. Having fast answer,
+in the range of 5 minutes or less will be beneficial for the whole company.
+% paragraph Speed (end)
+\paragraph{Efficicy} % (fold)
+\label{par:Efficicy}
+Due to the high cognive demand of such work, the efficiency of the planning depend
+in great part from the wellness of the regulator. While they are able to maintains
+high quality planification during the work, the type of jobs is very exhausting on
+the person. Algorithmic solutions will always have be constant in quality, and will
+free the regulator to do its actual job of taking care of humans problem and
+unforseeable incident on the field.
+
+% paragraph Efficicy (end)
 
 \subsection{Problem definition}
 Formal definition
