@@ -191,13 +191,43 @@ unforseeable incident on the field.
 % paragraph Efficicy (end)
 
 \subsection{Problem definition}
-Formal definition
+The problem can be caracterised as a Multi-depot Capacited Heterogeouns Pickup
+Delivery Vehicle routing problem with time windows (MCHPDVRPTW). \\
+Formally it can be describe this way: given a set of appointements, find the routing that minimize the
+delay and lateness to serve mission, minimize the number of used vehicle, minimize
+the number of used employee, while avoiding using the wrong type of vehicle,
+violating legal constraint on the crews (pauses, total working time) and the number
+of maximal patient in the vehicle.
+Here is the mathematical formulation of the problem:
+% Math relou ici 
+%
+%
 
-Difficulty of such optimisation : - Vehicle
-- employee
-Quality of result
--> two objective : load/legal + vehicle/employee
-Patient => quality of service
+The difficulty of such optimisation is the fact the in must optimised the vehicles
+route and the employee(crews). We wanted here to take a global approach as the two
+goes together and influence each other in a antagonistic way in some case, depending
+of the dataset. In more ancient real-world example, the routes are optimized alone
+or with very few heuristics, and a second optimisation was done on top of the result
+of the first one. Such techniques even if feasable and easy to implement or test
+break the promise of globally optimising the problem.\\
+That is  why a multi-objective was chosen. Compared to the first working prototype
+of august 2015, we changed the objective to the three following one:
+
+\paragraph{Employee} % (fold)
+\label{par:Employee}
+
+% paragraph Employee (end)
+
+\paragraph{Vehicle} % (fold)
+\label{par:Vehicle}
+This objectives is designed around getting correct and working routes from the
+logistic point-of-view
+% paragraph Vehicle (end)
+
+\paragraph{Load} % (fold)
+\label{par:Load}
+
+% paragraph Load (end)
 
 \subsubsection{Healthcare transportation specificities}
 \label{sub:Healthcare transportation specificities}
@@ -316,12 +346,66 @@ répertoriées dans la table suivante :
 \subsection{Comparaison against human operators}
 Difficulty to do 
 
-\section{Deployement}
-CPU ok 
-GPU => difficult 
-Docker + AWS 
+\section{Deployement and architecture}
+
+The current version of the deployed algorithm is the cpu version. This version is in
+production in a few test clients, each one having very different needs. For example,
+one client do not required to do any employee optimisation and its workload are
+around the high-end of what we consider small client (~200), while the other need a
+very precise and tight optimisation of theirs employee on small workload (~80).\\
+\\
+To be able to rapidly implement different features and toggles them on depending of the client,
+we develop a small middleware in python django to launch instance of the algorithm
+with the correct set of options. The middleware also take care of isolating the
+different instances between users of the small company and serve as an orchestration
+tools.\\
+\\
+The pipeline remains simple: the end-user configure than start the algorithm through
+Saphir, Saphir than collect and export the data to the middleware. The middleware
+then start the algorithm instances with the received data and addition options to
+provide isolation.\\
+\\
+The GPGPU version while being done developed and tested, is still at the time of
+writing not deployed due to the difficulty to get hardware equipped with specific
+GPGPU in datacenter. We wanted to avoid having to pay for a dedicated server rack
+with "professional-grade" GPGPU such as Tesla K20, because our algorithm was
+designed with consumer-grade graphical card such as the Nvidia 960 GTX. Using the
+cloud (Amazon AWS EC2) for this project is impossible due to the high tarification
+of such services.
+\\
+We start using Docker for easy deployement and scalability of the algorithm. Docker
+is a tool for deployement, orchestration and automatisation, providing a layer of
+abstraction and isolation over the kernel and the linux operation system, in order
+to avoid the problem related with virtual machine (slow starting time, size, etc
+...). \\
+Using Docker was quite informative about real-world deployement, robustness,
+realtime scalability and monitoring. It is a tool that got a lot of praise those
+last few year, but remains easy to use. Docker container are light (less than 500
+MB for our), quick to deploy (a few minutes) and provide quasi-instantaneous launch
+(around 300ms).
+
+I still worked on deploying the architecture on Amazon Elastic Cloud as a back-up
+solution. One of the only difficulty encounter is to get base amazo linux image with the
+correct nvidia driver installed because it must correspond. To get a Docker
+container correctly accessing the GPU, the toolkit install on it must also
+correspond with the drivers installed on the host.
+The price tag of Amazon EC2 is what block us from using it: The optimization must
+run at all time in realtime continuous mode, and the average price of GPU instance
+is around 0.3 dollars per hours, per client. 
 
 \section{Role}
+
+This year me role inside the company and in the project changed quite a bit. I kept
+my position as the lead researcher and lead developer on the project, but I step
+down for me position of junior project manager, for the following reason: due to the
+algorithm going in product a lot control over the different tests and discution with
+clients, modification or implementatin of feature were delegated to the main
+hierarchy of the company. For a concrete example all communication with clients now
+go through the support department, before going to the main project manager of
+Saphir M. Munsch and occasionaly to the CTO M. Philips.\\
+As the project did came to completion, more and more employee and fellower
+developers of Synovo became familiar with the project, its goals, underlying
+concepts and core functionalities.
 
 \section{Discussion}
 
