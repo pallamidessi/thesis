@@ -215,22 +215,68 @@ of august 2015, we changed the objective to the three following one:
 
 \paragraph{Employee} % (fold)
 \label{par:Employee}
-
+The goal of this fitness is the reduce "cost" of the employee:
+\begin{itemize}
+  \item The overall premature starting time
+  \item The diploma requirements of the crew
+  \item The size of the crew
+  \item The presence of a pause every 6 hours
+\end{itemize}
 % paragraph Employee (end)
 
 \paragraph{Vehicle} % (fold)
 \label{par:Vehicle}
 This objectives is designed around getting correct and working routes from the
-logistic point-of-view
+logistic point-of-view. This mean:
+\begin{itemize}
+  \item Minimizing the delay of picking up and delivering patient
+  \item Using the correct type of vehicle for the mission
+\end{itemize}
 % paragraph Vehicle (end)
 
 \paragraph{Load} % (fold)
+This fitness is kept simple in opposition to the two firsts which are agglomeration
+of differents smaller fitnesses working positively correlated together. It only
+evaluate the capacity of the vehicle or more exactly the overloads.
 \label{par:Load}
 
 % paragraph Load (end)
 
 \subsubsection{Healthcare transportation specificities}
 \label{sub:Healthcare transportation specificities}
+In the field, healthcare transportation services take great care of having the best
+quality of service. It is an industry focus on the patient comfort first, due to the
+fact that patient that need transportation tends to be recurrent due to lifelong
+disability or disease, such as dyalised patient which will require transportation 3
+time a week during the rest of theirs life.
+The second most important point is the feasability of the routing. Healthcare
+transportation services are routinely facing the lack of resource to do all mission
+and while running with low resource margin (fleet size or employee), they are
+vulnerable to imprevisible incident (accident on the road, employees not showing
+up).\\
+
+As already stated earlier, the fleet of a healthcare transportation service is by
+nature heterogenous. Some patient can only moved laying, while other can be sitting,
+the required equipment can differ significantly: ranging from nothing to big specialized
+hardware for heavy burned or morbidly obeses patient. They are four type of vehicle
+defined by the french gouvernment, hospital and healthcare professional:
+
+\paragraph{VSL} % (fold)
+\label{par:VSL}
+  TEST TEST
+
+\paragraph{AMBULANCES} % (fold)
+\label{par:VSL}
+  TEST TEST
+
+  \paragraph{TMPR} % (fold)
+\label{par:VSL}
+  TEST TEST
+
+  \paragraph{TAXI} % (fold)
+\label{par:VSL}
+  TEST TEST
+
 Priority on the quality of services and feasability
 Pauses for employee
 heterogeous fleet
