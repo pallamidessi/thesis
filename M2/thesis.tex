@@ -143,7 +143,8 @@ where they start and end.\\
 
 The more constrained the problem is the smaller the search space will be. This fact
 is easy to demonstrate when graphically solving a linear integer problem with the
-simplex method for example.
+simplex method for example.\\
+
 
 %Genetic algorithm 
 Distributed 
@@ -197,12 +198,16 @@ Formally it can be describe this way: given a set of appointements, find the rou
 delay and lateness to serve mission, minimize the number of used vehicle, minimize
 the number of used employee, while avoiding using the wrong type of vehicle,
 violating legal constraint on the crews (pauses, total working time) and the number
-of maximal patient in the vehicle.
+of maximal patient in the vehicle.\\
 Here is the mathematical formulation of the problem:
 % Math relou ici 
 %
 %
 
+The end goal is to be able to provided efficient optimization of the whole day in
+sub 5 minutes time. That is given a set of missions, a fleet of available vehicle
+and employee to get a feasable and at least human comparable planification if not
+better. \\
 The difficulty of such optimisation is the fact the in must optimised the vehicles
 route and the employee(crews). We wanted here to take a global approach as the two
 goes together and influence each other in a antagonistic way in some case, depending
@@ -261,29 +266,219 @@ the required equipment can differ significantly: ranging from nothing to big spe
 hardware for heavy burned or morbidly obeses patient. They are four type of vehicle
 defined by the french gouvernment, hospital and healthcare professional:
 
-\paragraph{VSL} % (fold)
+\paragraph{Vsl} % (fold)
 \label{par:VSL}
-  TEST TEST
+A vsl (vehicle sanitaire léger or light sanitary vehicle) is a simple car, with no
+other equipment than a standars medical kit. It driver must just have a driver
+licence and a small certification. It is the most common type of transport, for
+patient with low to no physical affliction.
 
-\paragraph{AMBULANCES} % (fold)
-\label{par:VSL}
-  TEST TEST
+\paragraph{Ambulance} % (fold)
+\label{par:Ambulance}
+Ambulance of heavy duty vehicle required when the patient need to be laying and need
+medical attention during the travel. Ambulance are manned by a crew of two persons,
+one driver and one practionner holding a DEA licence.
 
-  \paragraph{TMPR} % (fold)
-\label{par:VSL}
-  TEST TEST
+  \paragraph{TPMR} % (fold)
+\label{par:TPMR}
+A TPMR is also a king of light vehicle but setup for laying transportation. Their is
+also one simple driver which didn't require any other licence. 
 
-  \paragraph{TAXI} % (fold)
-\label{par:VSL}
-  TEST TEST
+  \paragraph{Taxi} % (fold)
+\label{par:Taxi}
+A taxi is analoguous with VSL, to the point that some company don't do any
+distinction between the two. The only difference is about the cost of the mission
+due to heavy government subvention when satisfiying certain condition like the total
+distance travel for one mission. The driver do not require any medical licences.
 
-Priority on the quality of services and feasability
-Pauses for employee
-heterogeous fleet
-Pick-up delivery
-
+The problem of patient transportation is modeled as pickup delivery vehicle routing
+problem. In pickup-delivery problem, the vehicle must transport "loads" (here
+patient), without any intermediatary pause, stop, change of vehicle or unloads
+between the pickup phase (the origin point) and the delivery (destination).
 
 \section{State of the project}
+In september 2015, we did have a working prototype as advertised in the preceding
+thesis. The core ideas and techniques have not changed between last year algorithm
+and the current one, but the definition of problem did changed considerably. \\
+At first, we tried to map an ontology that was very precise and did integrate a lot
+the domain problematics without any treatment. This lead to sub-optimal solution,
+because we were more trying to map the ontology of the problem than to solve the
+problem per se. The generally confusing around the actual cost of a kilometer for
+one type of vehicle, for example, and the difficulty to get estimate from transportation services
+themselves proved the inefficiency of the way.\\
+Because of the genericity of genetic algorithm and meta-heuristic framework, we only
+had to update the domain-specific part of the algorithm: the evaluation procedure.\\
+\\
+Before going any further in the details, we will do a 1) quick recap of the framework
+of genetic algorithm and 2) reintroduces the used operator, before jumping to the
+novel part of the algorithm.
+
+\subsection{Quick introduction to genetic algorithm} % (fold)
+\label{sub:Quick introduction to genetic algorithm}
+Les algorithmes génétiques (GA) sont généralement utilisés pour chercher
+la meilleure solution possible à des problèmes inverse complexe,
+combinatoire ou continue. \\
+Ils améliorent de manière évolutive un ensemble de solutions
+potentielles dans l'espace de recherche de toutes les solutions
+possible. Les algorithmes génétiques ou algorithmes évolutionnaires sont
+une classe d'algorithme s'inspirant de la théorie de l'évolution comme
+énoncé par Charles Darwin avec son principe de \emph{« \textbf{survival
+of the fittest} »}. \\ 
+L'idée derrière l'utilisation et la mise en place
+d'algorithmes évolutionnaires est apparue à la fin des années 50\cite{john1992adaptation} en
+essayant de mimer le modèle évolutionnaire naturelle. Il a ensuite été
+nécessaire d'attendre l'apparition d'ordinateur et d'unité de calcul
+suffisamment puissant pour que les GA deviennent réellement
+exploitables. Les analogies avec la biologie sont nombreuses. \\
+Leur fonctionnement est conceptuellement très simple : la solution du
+problème à résoudre est modélisée sous forme d'un individu. Une
+population d'individus générés aléatoirement va être créée et cette
+population va ensuite suivre la boucle évolutionnaire suivante composée
+de quatre opérateurs génétiques : croisement, mutation, évaluation et
+sélection. Nous les expliciterons dans quelques instants.
+
+
+\subsubsection{Operator} % (fold)
+\label{sub:}
+\paragraph{Initialisation} % (fold)
+\label{par:Initialisation}
+Au début de l’algorithme, la population initiale est définie en créant des individus
+aléatoires. Les GA nécessitent des générateurs de nombre aléatoire uniforme rapide et
+de bonne qualité pour garantir un bon échantillonnage de l’espace de recherche comme14
+les générateurs Mersenne twister ou plus récemment les xorshift[20].
+Selon le problème, il peut se révéler intéressant d’introduire des contraintes ou même
+des individus étant eux même des solutions de bonne qualité pour aider la recherche.
+Ces biais ont néanmoins tendance à trop contraindre les solutions possibles et à perdre
+la possibilité d’obtenir des résultats créatifs.
+\paragraph{Crossover} % (fold)
+\label{par:Crossover}
+La phase de crossing-over (ou recombinaison, reproduction) consiste à créer de nou-
+veaux individus d’après plusieurs parents. De nombreux types de cross-overs existent,
+adaptés à diverse représentation d’individu. Le cross-over doit prendre en compte la
+structure de l’individu et est de fait lui aussi spécifique au problème.
+
+Pour corriger les problèmes du cross-over mono-point, un
+\emph{cross-over} dit \textit{BCRC\cite{ombuki2006multi}} (\emph{Best cost route cross-over}) plus
+récent et plus adapté au problème de \textit{ VRP} fut sélectionné pour le
+remplacer de mon initiative. N'ayant pas d'implémentation disponible, il
+fut d'abord prototypé en \textit{Python} à l'aide du framework évolutionnaire
+\emph{DEAP} sur un problème de \emph{VRP} synthétique en utilisant les
+jeu de données de VRP standard de Solomon\cite{solomon1987algorithms}. Après validation des
+résultats, je l'ai porté en \textit{C++}, non sans difficulté du fait de
+son utilisation massive de structure de données dynamique, délicatesse
+non permise pour l'architecture \textit{GPU} visée pour des raisons de
+performances. \\
+Cette implémentation \emph{C++} fut la source de bien des
+déboires tant au niveau de l'implémentation que des performances sur
+\textit{GPU} du fait de ses nombreuses divergences et de la nécessité
+d'allocation mémoire dynamique.
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width=6in]{img/BCRC.png}
+		\caption{Best Cost Route Cross-over.}
+	\end{center}
+\end{figure}
+
+
+\paragraph{Mutation} % (fold)
+\label{par:Mutation}
+L’opérateur de mutation permet de faire varier de manière aléatoire les nouveaux
+individus « enfants » pour améliorer l’exploration de l’espace de recherche, certaines «
+zones » ne sont potentiellement pas accessibles par cross-over ou lorsqu’il n’y a pas eu
+d’occurrence d’un gène ou d’une certaine valeur d’un gène dans la population initiale.
+Là encore, l’opérateur de mutation dépend du problème et de la représentation utilisée,
+\paragraph{Evaluation} % (fold)
+\label{par:Evaluation}
+\paragraph{Multi-objective selection } % (fold)
+Avant d'entamer la prochaine génération, il faut assigner les « nouveaux
+» parents d'après l'ensemble ($\lambda$ + $\mu$) des individus enfants
+$\lambda$ et des parents $\mu$ de la génération précédente. Le nombre
+d'individus sélectionnés de cette manière est égal à la taille
+originelle de la population parent $\mu$. \\
+La sélection se base sur la \emph{fitness} des individus. Cependant, un
+mécanisme simpliste où seuls les meilleurs (les plus aptes) individus
+sont sélectionnés, après un tri par exemple, entraîne des problèmes de
+convergence prématurée.
+
+\bigskip
+Lors du processus de sélection, il est nécessaire de garder des
+individus ``relativement\cite{sharma2010archived,deb2002fast}'' bons qui aident à maintenir une certaine
+diversité dans la population globale, ce qu'un choix déterministe ne
+garantit pas. \\
+Les méthodes de sélection sont donc généralement stochastiques comme la
+très courante et efficace sélection par tournoi, qui retourne le
+meilleur individu d'un ensemble aléatoire de n éléments. 
+Il est à noter que les méthodes de sélection, ou sélecteurs diffèrent
+grandement entre une \emph{GA} simple et une optimisation multicritère
+(\emph{MOEA\footnote{Multi Objective Evolutionary Algorithm}}). Ce point précis sera bordé dans la section suivante.
+
+\paragraph{Optimisation
+multiobjectif}\label{optimisation-multiobjectif}
+
+L'intérêt d'utiliser des algorithmes génétiques vient que les résultats
+obtenus sont créatifs et compétitifs avec l'intelligence humaine. Au
+bout d'un certain nombre de générations, et ce malgré le fait d'avoir
+initialisé les individus aléatoirement, on obtient de « bons »
+résultats. On les définit comme « bon » du fait qu'on ne peut pas
+déterminer si l'optimum global du problème a été atteint ou si
+l'optimisation est restée bloquée dans un optimum local. Classiquement,
+on cherche à optimiser un seul critère, mais il est aussi possible d'en
+avoir plusieurs possiblement antagonistes. La difficulté des algorithmes génétiques multiobjectifs (\emph{MOEA}) vient de l'opérateur de
+sélection. 
+\\ Dans le cas d'un algorithme mono-objectif, la sélection se
+fait de manière relativement évidente : on prend les meilleurs individus
+issus de multiples tournois. Avec un MOEA, comment définir un « bon »
+individu ? Un individu optimisant parfaitement le critère 1 et pas les
+autres est-il meilleur qu'un autre qui optimise moyennement tous les
+critères ? Le principe derrière tous les opérateurs de sélection
+multiobjectif (\emph{NSGA-II\cite{deb2002fast}, ASREA\cite{sharma2010archived,sharma2010gpgpu}, SPEA}) nous vient du monde de
+l'économie. Il s'agit de l'optimalité de \emph{Pareto}, aussi appelée
+\emph{Pareto-dominance}.
+
+\paragraph{Dominance de Pareto}\label{dominance-de-pareto}
+
+Dominer au sens de Pareto\cite{voorneveld2003characterization}, pour un élément donné, signifie qu'aucun
+autre élément n'a au moins un critère meilleur que les siens. Dans le
+cadre des \emph{MOEA}, une solution domine une autre si les deux
+conditions suivantes sont remplies:
+
+\begin{itemize}
+\item
+  La solution x1 n'a aucune fitness plus mauvaises que celle de x2
+\item
+  La solution x1 a au moins une fitness meilleure que celle de x2
+\end{itemize}
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width=4in]{img/paretoDominance.png}
+		\caption{Soit deux individu, rouge et vert. Pour un problème de minimisation, de gauche à droite, vert domine rouge, rouge domine vert et ni rouge ni vert ne se dominent.}
+	\end{center}
+\end{figure}
+
+
+% Plus formellement: // formule en laTex
+
+De par cette définition on peut déduire le concept de \emph{front de
+Pareto}: l'ensemble des solutions non dominé. Les fronts de Pareto
+permettent de trouver de bons compromis entre les différents objectifs.
+Définir un front de Pareto revient à trouver une enveloppe convexe\cite{godfrey2007algorithms} dans
+un espace à dimension \textit{n}, où \textit{n} est le nombre d'objectif.
+
+\label{par:Multi-objective selection }
+
+\subsubsection{Parameters} % (fold)
+\label{ssub:Parameter}
+
+% subsubsection Parameter (end)
+% paragraph Multi-objective selection  (end)
+% paragraph Evaluation (end)
+% paragraph Mutation (end)
+% paragraph Crossover (end)
+% paragraph Initialisation (end)
+% subsection  (end)
+% subsection Quick introduction to genetic algorithm (end)
 Problem already finally defined 
 Work already done
 Small change => mainly refactoring
