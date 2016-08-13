@@ -13,6 +13,7 @@
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
 \usepackage[font={small,it}]{caption}
+\usepackage{subcaption}
 %%\usepackage[margin=1.4in]{geometry}
 %%\usepackage{babel}
 
@@ -61,7 +62,10 @@ focus even when the obstacle seemed inreachable. He was flexibility, availabilit
 and focus are something that I wish to encounter again in my carrier, as it gave me
 the strength to finish this big challenge. \\
 Jeremy Wies for my current position of research assistant at Synovo.
-Thibault Thomas for his always optimistic mood and the overall help, on to many things to enumerate here. It was always a pleasure to discuss with him and I formally apologize for having him be me rubber ducks while being stuck on problems. As a true believer of the concept serendipity, many aspect of the current work may have been indirectly influenced by ours discussion. \\  
+Thibault Thomas for his always optimistic mood and the overall help, on to many things to enumerate here. It was always a pleasure to discuss with him and I formally apologize for having him be me rubber ducks while being stuck on problems. As a true believer of the concept serendipity, many aspect of the current work may have been indirectly influenced by ours discussion. \\
+Anne Juventy for having be a great help at a time the future of the project seemed
+dire. It is be her ingenuosity and pratical minds that we were able to canalised our
+thought.\\
 Benjamin Chetioui for having be an efficient and resourceful coworker and his numerous inputs in all aspects of this project.
 
 
@@ -105,8 +109,8 @@ metaheuristic. The fields af vehicle routing problem (VRP) is composed of numero
 \label{par:CVRP}
 In the CVRP variant, the vehicle capacity of "goods" is limited and sometime the
 good must also be package in the correct of delivery, meaning it involve a knapsack
-optimisation once the routing is defined. This problem represent the core of
-logistics and is prevalent in physical goods transportation. This is also the case
+optimisation once the routing is defined.\\
+This problem represent the core of logistics and is prevalent in physical goods transportation. This is also the case
 of our problem as theirs is a limited number of seat in the vehicles and some
 limitation concerning the ambulances for example, where theirs can be only one
 patient at once, independantly of the size of the medical crew.
@@ -118,8 +122,8 @@ patient at once, independantly of the size of the medical crew.
 In the case of delivery to consumer directly arise the question of the delivery
 timing. The VRPTW is a highly constrained problem where the delivery must occurs
 at specific time window. Depending of the criticality of the delivery, systems tend
-to treat windows with more or less flexibility. In our case, the delay penalty on an
-appointement is weighted its type. The problem definition will be given in much more
+to treat windows with more or less flexibility. \\ 
+In our case, the delay penalty on an appointement is weighted its type. The problem definition will be given in much more
 detail in the following section.
 % paragraph VRPTW (end)
 %Definition of VRPTW
@@ -144,12 +148,109 @@ where they start and end.\\
 The more constrained the problem is the smaller the search space will be. This fact
 is easy to demonstrate when graphically solving a linear integer problem with the
 simplex method for example.\\
-
+In our problem
 
 %Genetic algorithm 
 Distributed 
 
 \section{Context of research}
+\subsection{Synovo} % (fold)
+
+Synovo est une startup strasbourgeoise crée par Jérémy Wies, fondateur,
+directeur financier et commercial, Michel Lacombe, directeur Formation
+\& Business Intelligence et Guillaume Phillip, directeur technique. Les
+locaux de l'entreprise se situent à la Meinau, à quelque pas du lycée
+Couffignal. \\ 
+Jérémy Wies est le directeur et fondateur de Synovo SAS. Ancien étudiant
+de Supinfo, il d'abord créé la société New Web\footnote{\url{www.new-web.fr}}, spécialiser dans les
+solutions d'hébergement d'infrastructure de type cloud pour les
+transporteurs sanitaire qui s'est ensuite développé avec des offres plus
+généralistes puis Synovo, connaissant bien les besoins des services de
+transports sanitaires. \\
+L'entreprise est spécialisée dans la gestion et l'optimisation de
+transport de santé en France depuis bientôt 6 ans. Leur cheval de
+bataille est la gestion logistique de flotte d'ambulance destinée aux
+sociétés de transport sanitaire françaises.
+
+\bigskip
+Synovo est née de l'initiative de ses trois fondateurs, alors étudiants
+à SUPINFO, après avoir décroché le premier prix à un startup week-end
+organisé par Strasbourg Startup en 2011. Après avoir enchainé les
+concours (Yago, Talent des cités, Pépites) et levé des fonds, la société
+compte maintenant plus d'une vingtaine d'employés et une dizaine de
+clients répartis sur toute la France, soit un total d'environ 300
+véhicules. \\
+Après 3 ans de développement, leur logiciel phare, Saphir, offre une
+solution de gestion aux problèmes de logistique rencontrée par ces
+sociétés : prise de rendez-vous, communication entre les régulateurs et
+le personnel roulant, tracking GPS, comptabilité et facturation, outils
+statiques et BI. C'est dans le cadre du projet Saphir que s'intègre mon
+travail de R\&D d'optimisation de tournée par algorithme génétique. La
+remontée en temps réel d'information de \emph{tracker} GPS embarqués et
+de l'état des missions forment un élément essentiel pour le caractère
+dynamique de l'algorithme d'optimisation de tournées. \\
+Mon maître
+d'apprentissage et encadrant chez SYNOVO SAS est M. Guillaume Philips.
+Il occupe le rôle de directeur général et de CTO. C'est avec lui que
+j'ai la plupart des discussions d'ordre techniques et l'avancement du
+projet HIRONDELLE. Il supervise le développement du projet Saphir dans
+son ensemble.
+
+\bigskip
+L'entreprise est en pleine expansion, avec plus de 10 nouveaux employés
+depuis le début de l'année portant le nombre à 23, et une vingtaine
+d'embauches prévues pour la fin d'année. De nombreux étudiants d'écoles
+d'informatique environnantes (Supinfo, Epitec, Exia,) viennent faire des
+stages, élevant encore ce nombre. Synovo est très fortement investi dans
+le tissu associatif des startups en Alsace avec des partenariats et
+soutiens avec Alsace Digitale et French Tech Alsace.
+
+\paragraph{Développement}\label{duxe9veloppement}
+
+L'entreprise est organisée en différents pôles: support, développement,
+Business intelligence, mobile et R\&D.
+
+Le pôle développement comprend la plus grande partie de la force de
+travail, soit 12 développeurs avec M. Guillaume Philips comme chef de
+projet. Ce pôle se concentre sur l'ajout de nouvelles fonctionnalités au
+logiciel, généralement plusieurs en parallèle.
+
+\paragraph{Support}\label{support}
+
+Le processus de commercialisation ayant déjà commencé et les produits
+étant encore jeunes, le pôle support lui aussi composé de développeurs
+C\# est de taille assez conséquente, 7 personnes environ. Leur travail
+consiste à corriger les bugs remontés par les clients, à indiquer
+comment utiliser certaines fonctionnalités du logiciel et à le mettre à
+jour.
+
+\paragraph{BI et ergonomie}\label{bi-et-ergonomie}
+
+La partie d'analyses statistiques et de Business Intelligence est
+dirigée par M. Michel Lacombe. Cette petite équipe (3 employées)
+s'occupe aussi de tous les interfaces homme-machine de Saphir et des
+produits et services connexes.
+
+\paragraph{Mobile Android}\label{mobile-android}
+
+2 Développeurs travaillent sur l'application mobile permettant aux
+ambulanciers sur le terrain de recevoir et d'envoyer des informations
+vers l'outil de régulation proposé par Saphir.
+
+\paragraph{R\&D}\label{rd}
+
+Cela ne fait que depuis mon arrivée en avril que Synovo dispose d'un
+pôle R\&D dans ses murs. Avant cela, la partie de recherche était
+fournie par l'équipe BFO du laboratoire ICube. Deux autres développeurs
+m'ont rejoint en août: M. Ivan Aksamentov dans le cadre d'un stage
+jusqu'à fin août et M. Benjamin Chetioui, en stage pour l'instant, qui
+continuera en tant qu'apprenti dans le cadre du master d'informatique,
+mention ILC.
+
+
+\label{sub:Synovo}
+
+% subsection Synovo (end)
 \label{sec:Context of research}
 The main motivation of this research is the automate the whole logistic process of
 transporting patient for a number of reason. Historically healthcare transportation
@@ -203,7 +304,8 @@ Here is the mathematical formulation of the problem:
 % Math relou ici 
 %
 %
-
+\\
+\\
 The end goal is to be able to provided efficient optimization of the whole day in
 sub 5 minutes time. That is given a set of missions, a fleet of available vehicle
 and employee to get a feasable and at least human comparable planification if not
@@ -221,12 +323,7 @@ of august 2015, we changed the objective to the three following one:
 \paragraph{Employee} % (fold)
 \label{par:Employee}
 The goal of this fitness is the reduce "cost" of the employee:
-\begin{itemize}
-  \item The overall premature starting time
-  \item The diploma requirements of the crew
-  \item The size of the crew
-  \item The presence of a pause every 6 hours
-\end{itemize}
+
 % paragraph Employee (end)
 
 \paragraph{Vehicle} % (fold)
@@ -253,7 +350,7 @@ In the field, healthcare transportation services take great care of having the b
 quality of service. It is an industry focus on the patient comfort first, due to the
 fact that patient that need transportation tends to be recurrent due to lifelong
 disability or disease, such as dyalised patient which will require transportation 3
-time a week during the rest of theirs life.
+time a week during the rest of theirs life. \\
 The second most important point is the feasability of the routing. Healthcare
 transportation services are routinely facing the lack of resource to do all mission
 and while running with low resource margin (fleet size or employee), they are
@@ -263,8 +360,8 @@ up).\\
 As already stated earlier, the fleet of a healthcare transportation service is by
 nature heterogenous. Some patient can only moved laying, while other can be sitting,
 the required equipment can differ significantly: ranging from nothing to big specialized
-hardware for heavy burned or morbidly obeses patient. They are four type of vehicle
-defined by the french gouvernment, hospital and healthcare professional:
+hardware for heavy burned or morbidly obeses patient.\\
+They are four type of vehicle defined by the french gouvernment, hospital and healthcare professional:
 
 \paragraph{Vsl} % (fold)
 \label{par:VSL}
@@ -289,8 +386,8 @@ also one simple driver which didn't require any other licence.
 A taxi is analoguous with VSL, to the point that some company don't do any
 distinction between the two. The only difference is about the cost of the mission
 due to heavy government subvention when satisfiying certain condition like the total
-distance travel for one mission. The driver do not require any medical licences.
-
+distance travel for one mission. The driver do not require any medical licences.\\
+\\
 The problem of patient transportation is modeled as pickup delivery vehicle routing
 problem. In pickup-delivery problem, the vehicle must transport "loads" (here
 patient), without any intermediatary pause, stop, change of vehicle or unloads
@@ -486,42 +583,178 @@ Genetic algorithm working fine
 In production
 
 \section{Local searches}
-Help the genetic algorithm with a set of local search
-Exploitation/exploration
+By design genetic algorithm provided good exploration of the search space, meaning that they sample the fitness landspace in a coarse-grain fashion.
+The mutation operator setup in the evolutionary loop, provide the smaller step of the sampling also called "exploitation". The main difficulty when trying to 
+solve a problem using stochastic methods or using machine learning is to have a good ratio between exploitation and exploration. This is often refered in the literature as the sploitation/exploration problem. If the exploitation is too high, the search will be quickly stuck in local optimum and if the exploration is too high the search will not converge to any useful result. \\
+With the exception of the mutation operators describe before, the first part of this thesis was focus in the exploration part of the algorithm, implemented last year. In this section we will describe the work done on creating and adapting popular local search methods in VRP and travelling saleman problem to ours specific problem as combinatory optimization often require to be help with a set of local search algorithm, small heuristics and brute force methods.
+
 \subsection{2-opt* for pickup-delivery}
-The exchange heuristic swaps two visits in differ-
-ent routes. This is pictured in Figure 6. Finally, cross
-is similar to 2-opt {\*}
-proposed by Potvin and Rousseau
-(1995) for VRPTW. Initially, a virtual vehicle, which
-performs the visits not carried out by the real vehi-
-cles, exists. This virtual vehicle is different from the
-real  ones  in  two  respects.  First,  the  virtual  vehicle
-can  make  an  unlimited  number  of  customer  visits.
-Second, the cost incurred by the virtual vehicle when
-it performs a customer visit is typically higher than
-that incurred by a real vehicle.
+The 2-opt* local search consist of exchanging two nodes form 2 different routes. If the newly defined routes 
+produced a better global solution as defined by the evaluation function (in the basic formulation of TSP 
+the new solution produced a shorter global solution in distance).
+
+
+
 \subsubsection{Base algorithm}
-Enhancement of 2-opt
+To avoid unneccesery computation the algorithm use the concept of tringular irregularity 
+between the old and new egdes after reorganization. By doing this, there is no need to 
+evaluate the whole solution after each swapping, only the locally changed resulting edge.\\
+\\
+The whole algorithm work as following:\\
+For each node of a route, we try to swap with all the nodes of all other route and we 
+select the best one as define by the evaluation function. If an improvoment over te global
+ fitness occured (a swap was selected) the set a improvement boolean at true.\\
+\\
+We continue doing the same procedure between all the nodes of the problem, resulting in a
+ complexity of O(n2). This local search, will exhaustive is greedy by nature and is not proved
+ to find the best global reorganisation of nodes, which is the task of the evolutionary loop.\\
+\\
+Here the formulation of the algorithm.
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width=4in]{img/2-opt.png}
+		\caption{Best Cost Route Cross-over.}
+	\end{center}
+\end{figure}
+\subsubsection{2-opt*}
+The 2-opt algorithm is not adapted to time-windows variant of the TSP/VRP problem like ours.
+ In order to work well with the time constraint a variant of the 2-opt algorithm was developped,
+ called 2-opt*. A new condition must be satisfied when swapping edge. The nodes preceding and 
+following the selection one, must verify the partial order of the time-windows, greatly reducing
+ the number of possible swap.\\
+\\
+The reformulation of the algorithm is the following:
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width=4in]{img/2-opt-star.png}
+		\caption{Best Cost Route Cross-over.}
+	\end{center}
+\end{figure}
 \subsubsection{PD-flavored version}
+Unfortunalty there was not a variant for the pickup-delivery variant of the TSP/VRP problem.\\
+ We decided to extends the 2-opt* local search for PD by following the same framework used to
+ pass trom the 2-opt to 2-opt*. In this case the new condition to satisfied before swaping is
+ he following: we swap the pickup and the delivery node of a journey simultaneously against the
+ pickup or the delivery of the selected node, while satisfying the requirements of the 2-opt* 
+algorithm for the two swapped node. This further reduced the possible number of swap but only 
+produced legal solution.\\
+\\
+The reformulation of the algorithm is the following:
+\\
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width=4in]{img/2-opt-star-pd.png}
+		\caption{Best Cost Route Cross-over.}
+	\end{center}
+\end{figure}
 
 \subsection{Intra route}
-Intra Route This heuristic picks two routes randomly and swaps two nodes from each route.
-The nodes are chosen based on the numbers generated randomly. After the
-swapping is done, feasibility is checked for the newly generated routes. If the
-two new routes are acceptable, they will be updated as part of the solution;
-otherwise the original routes will be restored.
+The basis of this heuristic picks two routes randomly and swaps two nodes from each route. 
+Without modification this really simple heuristic will not often produce legal solution in 
+the project context. We extended it by all swapping the other node of the journey with each other.\\
+This is more a mutation then an heuristic as no score or recomputed in anyway. The time-windows conditions
+doesn't need to by satisfied because the whole individual will be sorted following the partial order operator
+for time-windows before the evalutation phase.\\
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width=6in]{img/intra.png}
+		\caption{Best Cost Route Cross-over.}
+	\end{center}
+\end{figure}
+
 \subsection{RAR}
-Gendreau et al. [42] proposed a RAR (remove and
-reinsert) mutation operator, which extracts a node and inserts it into a random point of
-the routing sequence in order to retain the feasibility of solutions.
+An other mutation-like operator implemented the the Remove and Reinsert one. It consist of selecting randomly one node 
+in a route and inserting it back to another one.Like the others, a small adaptation was necessary.
+ We also remove and reinstert the sister element of the selected node. This operator is a means 
+to increase the solution diversity efficiently. Contrary the actual algorithm, no feasability checks are
+ done because they will occured during the evoluationary loop, in particular the crossover and 
+the evaluation phase, coming right after all local searches. \\
+
+\begin{figure}[htbp]
+	\begin{center}
+		\includegraphics[width=6in]{img/rar.png}
+		\caption{Best Cost Route Cross-over.}
+	\end{center}
+\end{figure}
+
 \subsection{Spliting and merging}
-Route splitting and merging, nothing fancy here 
+Route splitting and merging follow the same logic of the Remove and Reinsert operator.\\ 
+Instead of a single node it does operate on whole section of the route. A whole section
+ is remove from the original route to be reinserted to another one. Splitting and Merging are 
+dual operation in the mathematical sense of the terme.\\
+The difference are the following:
+\begin{itemize}
+  \item When splitting, the section is reinserted to an empty vehicles.
+  \item When merging the section is integrated to a non-empty vehicles.
+  \item Merging try to preserve the order of the subsection but abide the the time-windows partial order.
+\end{itemize}
+This mutation was developped because of the need to reinstate empty vehicle when optimising without
+ resource minimization in mind and thus is not uselful when minimizing it. 
+
+\begin{figure}[htbp]
+\centering
+	\begin{subfigure}{.5\textwidth}
+                        \centering
+			\includegraphics[width=2.7in]{img/merge.png}
+			\caption{Best Cost Route Cross-over.}
+	
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+                        \centering
+			\includegraphics[width=2.7in]{img/merge-simple.png}
+			\caption{Best Cost Route Cross-over.}
+
+	\end{subfigure}
+\end{figure}
+
+
 \subsection{Fuzzing}
+The fuzzing mecanism is one of the most important work done concerning the quality and concret utilisation
+of the algorithm as it reproduced part of the methodology used by the human operators. By design the algorithm 
+avoid breaking all order  accordingly with the partial order on the time-windows.\\
+In real planification, the 
+appointements are taken sometime weeks before they actually happened, often with limited vision of the future 
+planning for the days. With restricted resources, big delay or hard constraints can remains unsatisfied if 
+the problem is optimised head-on. For instance, if only 3 ambulances are provided and 4 journeys for ambulances 
+start at the exact same time given that ambulance in all possible configurations can only carry one passenger
+ (equivalente of taking one journey) at the same time, the following case will occur: 
+\begin{itemize}
+  \item A concurrent journey with ambulance, breaking the load hard constrain on ambulances  
+  \item The supplementary ambulance journey will be assigned to an other type of vehicle, 
+        breaking the hard constrain on the assignment by vehicle type
+\end{itemize}
+Such result are not valid and will be unusable on the grounds.\\
+In some configuration taking care a journey after one other, even if it means breaking the 
+imposed partial ordering will result in tremendous loss of delay. In reality, when the operator 
+successfully detect such problem, he's given the right to call back the client and changed the 
+time of the appointement. \\ 
+\\
+From this problem of unoptimisable journey and trivial improvement a need naturally arise of handling 
+all edges case automatically. For this purpose we decided to implement a random pertubation around the 
+actual time of each pickup and delivery. By adding a gaussian distributed noise, the sorting shift around 
+element, allowing the possibility to the algorithm to work past is previous limitation.\\
+The noise is modeled as a gene and is modified as such by the different genetic operators. 
+We modify our evaluation method to compute the difference between the shifted and non-shifted time 
+to correctly assert its benefice. Allowing the algorithm to think outside its own limitation does 
+have a drawback: it increase in a drastic and exponential manner the number of configuration, 
+which is only bound by the convergence of the evolutionary process.\\
+Graph
 
 \section{Result}
 \subsection{Metrics definitions}
-Focus on logistic and feasability : => no hard constraint violated
+For further assessing the quality of the result without clutered and losing sight of the logistic feasability of the solution, we defined a set of metrics that in some case is redundant with the fitness computation. \\
+The goal of those metrics is to quickly and efficient compare planning in a coarse-grained fashion. They also allow the operator to rapidly identify exploitable planning.\\
+Those as actually showed in the algorithm interface. They consist of: 
+\begin{itemize}
+  \item The total cumulated minutes of delay
+  \item The total cumulated minutes of anticipated employee starting time
+  \item The total cumulated kilometer of travel without load
+  \item The number of concurrent journey
+  \item The number of hard constrain violated
+\end{itemize}
+To also give an idea of the state of the evolution, we decided to only plot the delay 
+fitness allowing the operator to know when convergence as occured.
+Screenshot of the interface 
 \subsection{G-ASREA vs NSGAII}
 \subsubsection{Sélection et ranking : NSGAII et
 	ASREA}\label{suxe9lection-et-ranking-nsgaii-et-asrea}
@@ -578,14 +811,32 @@ répertoriées dans la table suivante :
 \end{center}
 
 \subsubsection{Execution time}
+The main selling point of ASREA is its relatively low complexityO(man), one degree below that a NSGA O(n2). 
+This permit much higher size of population resulting in a increase of diverstity. By having a high diversity 
+among individual, the optimization is much better at avoiding local optimum and lessen the risk of premature 
+convergence. NSGA-II is a purely sequencial algorithm and with high population count, represent as much as 
+99,9\% of the execution time. Here is the speed-up of our implementation of ASREA over NSGA-II. \\
+The results pretty much speak for themselves, we were able of getting almost 200 times faster generation 
+than NSGA-II. Exhaustive benchmarking are provided in the table below.
+ 
 \subsubsection{Quality of results}
-
-\paragraph{Per generations}
-
-\paragraph{Observation}
+An interesting byproduct of ASREA selection is the much better solution at a given generation while converging
+in a much later stage of the evolution. This is due to the high diversity and the resilience to random mutation 
+guarenteed by ASREA. Unfortunatly we had no time for a deeper analysis of this behaviours. Here are the plot of 
+each fitness of the best solution at every generation of a run using ASREA against one using NSGA-II 
 
 \subsection{Comparaison against human operators}
-Difficulty to do 
+The direct comparaison of planning done by human operators against the one generated by the algorithm is difficult 
+to survey directly. While human operators have difficulties visualizing the planning global order, that is the routing
+ itself, they are also the one knowing about theirs company specificity and all the edge case not covered directly by 
+the algorithm, i.e a patient only travel with a specific crew because of implicit reason (language, habit) or the company 
+not allowing or favorising certain type of configuration.\\
+\\
+Thus the algorithm only serve as base plannification, that need to be review by an human operator in order to correct 
+the obvious changes of specification. However, it does all the heavy lifting in a reasonable time (less than 1 minutes 
+for the whole day) with the correction taking 5 to 10 minutes of midly intensive work, given that by hand, the same planning
+should have took one hours of intensive work. When doing plannification with the help of the algorithm, one can expect a smaller 
+cognitive workload and saving up to 3//4 of the needed time.  
 
 \section{Deployement and architecture}
 
@@ -652,8 +903,7 @@ concepts and core functionalities.
 
 \section{Conclusion}
 
-\nocite{*}
 \bibliographystyle{plain}
-\bibliography{mémoire}
+\bibliography{thesis}
 
 \end{document}
