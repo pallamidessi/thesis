@@ -887,21 +887,128 @@ is around 0.3 dollars per hours, per client.
 
 \section{Role}
 
-This year me role inside the company and in the project changed quite a bit. I kept
-my position as the lead researcher and lead developer on the project, but I step
-down for me position of junior project manager, for the following reason: due to the
-algorithm going in product a lot control over the different tests and discution with
-clients, modification or implementatin of feature were delegated to the main
-hierarchy of the company. For a concrete example all communication with clients now
+This year my role inside the company and the project changed quite a bit. I kept
+my position as lead researcher and lead developer on the project, but I step
+down from my position of junior project manager, due to the following reason: with
+the algorithm going in production, a lot control over the different tests and discution with
+clients, modification or implementation of feature were delegated to the main
+hierarchy of the company. For a more concrete example, all communication with clients now
 go through the support department, before going to the main project manager of
 Saphir M. Munsch and occasionaly to the CTO M. Philips.\\
-As the project did came to completion, more and more employee and fellower
+As the project did finally came to completion, more and more employee and fellow
 developers of Synovo became familiar with the project, its goals, underlying
-concepts and core functionalities.
+concepts and core functionalities. \\
+I was still responsible for all decision concerning design, implementation
+and used technology for each features and requirements. There was a lot of back and
+forth between me and the main beta client/user GAGN concerning the theirs needed and
+the possibility to integrate theirs specific business logic efficiently as it was
+sometime conceptually incompatible with evolutionary process. Such demands often
+came from the need to enforce a constrain early-on the optimization, but potentially
+shifting the fitness landscape to a less interesting one.It was also I that was the 
+architect of the futur infrastructure and deployement. \\
+I learn a lot about modeling development pipeline and processes and releasing a 
+product with everyting around it: user feedback, bug tracking, support, public 
+documentation. I was thus able to further improve my knowlegde of the professinal
+ and corporate world. We will discuss and expand those item in the followings sections.
 
-\section{Discussion}
+\subsection{Decision-making and crisis-managing}
+Like enonced before, I was the sole responsable of the scientific side of the project.
+ It was very intellectually intensive as well as stressful, some features couldn't be 
+implemented directly but implicitly through subtible fitness value hierarchization and
+ scaling. Most time through, an ad-hoc approach regarding the addition of new condition 
+worked well. When adding condition and new "sub-fitness" to an EA, one must to guard to
+ avoid guiding to evolution to a unadapted fitness landscape. \\
+In some case, it was the utility of the asked features that were discussed. Some demands
+ did not fit at all to the general framework of evolutionary algorithm. My work in this
+ case consisted of finding a compromise between the client's demand and the feasability
+ of such demands. It did revolved a lot around finding a subsomption of the business 
+rules loosely related to the feature. To be able to do this, one must have a very deep
+ understanding of the domain that he tries to optimize for. Some demands were just not 
+feasable at all (such as requiring to solve an other NP-hard subproblem) or cleary
+ misguided and I was my responsablility as the Lead researcher to explains and refuse
+ such demands, in a clear and professional way.\\
+By component of my decision-making process was time, in multiple dimension. First, the time
+ needed to design and implement a feature, modification or improvement, as well as 
+debugging it in the sticto census meaning of the term in software engineering. Secondly, 
+the time needed to explain the behaviour and trajectory of the evolution in case of problem. 
+This is difficult to estimated at all, because there are no tools for it nor methodology. 
+In was necessary to be able to give satisfactory explaination to client and observer, 
+to help them get the core ideas between GA.
+
+\subsection{Stitching everything together}
+There were some period were it was exhausting to be the one-man orchestra of the project.
+To be able to fill the role it was a priority to get to know and expand some domain of 
+software engineering that I had not previously touched. \\
+Those unknows subject were more specifically related to the "Ops" part of the "devOps" 
+job: managing machines, server, monitoring production system, orchestration, logging, and so on.\\
+\\
+One details that struck me a bit was when I were not around or not focus on the job, 
+the project seem to lose its momentum due to the lack of leadership. This feeling 
+remained until the beginning of july, with the now working and in production GPGPU 
+version when Synovo higher-up pushed the product from the RD department to Saphir, 
+effectively integrating it with the main application.
+
+
+\subsection{Difficulties}
+For all R\&D project the most terrifying thing is to be lost on a problem and 
+having already explore the literature and the common ideas.\\ 
+This fear and feeling come by the fact that research is creative field and share the 
+problematic all creative fields. I did experiment this situation and frustation first-hand.
+When stuck, all project planning fall flat, as it is next to impossible to give correct estimation,
+ of time needed to overcome the obstacle. This sentiment is further magnified because of traditional corporate
+context with fixed hours. The lack of productivity kind of enhanced the frustation, 
+creating a stressful feedback loop.\\
+To escape it, one must be resourceful and critical of the work already done. It does take effort discarding previously 
+working modules and ideas, but in fine, it is by reshuffling and reinventing the global shape of the project that: 
+\begin{itemize}
+  \item New constraint are implemented cleanly and efficiently
+  \item New ideas can be developed from the freed space following restructuration
+  \item Problem can be skipped or resolved themselve implicitly
+\end{itemize}
+    
 
 \section{Conclusion}
+
+The ILC master, at the time of writing this memoir, my best profesionnal and personal experience. 
+The sheer amount of subject explored, difficulties overcome, productivity and learning, from so many
+ diffenrent angle make it an invaluable experience.\\
+Since there is so much to cover in this concluding part, we will follow this plan: The master program and apprenticeship 
+itself and how it was conducted, the work and research done in both the public and private institution and their scope,
+ what it did make me learning from the personal standpoint, the good it provide me in my future carrier and finally a 
+reflexion on the importance of automatization of task in the current economic context.\\
+\\
+
+%% Super master
+This type of formation is extremelly important as it give to the student of clear entry in the corporate world while 
+still providing a high-level academic education. In France, we should clearly put an emphasis on this type of education.\\
+\\
+%% Super experience 
+I did struggle a little bit at first to get an good life/college/work balance. Once the first month went by I did find 
+a correct equilibrium. While those two year were cleary the richest of my life in term of productivity in did tend to 
+be tiring, due the constant context switching.\\
+I did have a particular status inside this master, working on two different project and research structurel, 
+one public and academic, the Icube laboratory rattached to the University of Strasbourg and one private and
+startup-y, my work at Synovo as lead researcher. By having the chance to see both kind a structure it give me an 
+unprecedented view and scope on the research world. For it, I am grateful to both Pr. Collet and Mr. Wies that make it append.
+Sometime fully independent, sometime project manager, it was two years of concentrated work experiences.\\
+\\
+%% Content  
+The content of the work done was tremendously interesting. I was always my desir of working in the fields of narrow AI and 
+having to design and implement framework, then full genetic algorithm was the best introduction one can dream of. As stated before 
+it was not an easy task: a lot of effort was given to be able to get a commercial capable project. The domain of healthcare routing 
+was not explored at all in France due to the difficulty to extract clear, workable data and concept for EA.\\
+\\
+%%Personal satisfaction 
+Having finally completed this big and complex project, I hold a great feeling of satisfaction. 
+This end a 4 years colloboration between Synovo and the Icube laboratory. A lot of heart was poured in this project from
+ all the different participants and contractors and by having it running with GPGPU on production is a wonderful accomplishments.
+ From a personal perspective, having this project on my portfolio is one of the best reward a college graduate in Computer Science can get.\\
+\\
+%%Paradigm
+This project hold a special interest, in the mist of the current economic context because in a way in goes to the direction 
+of the probable paradigm shift of mass automatization of services and means of production. I remove penible and repetive task
+ with a high level of cognitive load, enabling the human to more interesting and diverse task instead. From the economic standpoint, it also allow the company to save money on the routing itself and on the human work required to get plannification. \\
+\\
 
 \bibliographystyle{plain}
 \bibliography{thesis}
