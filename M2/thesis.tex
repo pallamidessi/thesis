@@ -27,17 +27,25 @@
 \renewcommand\thetable{\arabic{table}}
 \setcounter{figure}{0}
 \renewcommand{\thesection}{\arabic{section}}
+
+\makepagestyle{mystyle}
+\makeevenhead{mystyle}{\thepage}{}{\includegraphics[height=45pt]{img/logo.png}}
+\makeoddhead{mystyle}{\includegraphics[height=45pt]{img/logo.png}}{}{\thepage}
+
+\pagestyle{mystyle}
+
 \begin{document}
 
 \title{Apprenticeship thesis, 2nd years \\ \textbf{Master of Computer Science}, speciality \textbf{Ingénierie du
 		Logiciel et des Connaissances} 
 	
 	\bigskip
-	{\huge Realtime continous optimisation of healthcare transportation fleet using massively parallel memetic algorithm on GPGPU} \\	
+	{\huge Real-time continous optimisation of healthcare transportation fleet using massively parallel memetic algorithm on GPGPU} \\	
 	}
 \author{Joseph Pallamidessi\\ University of Strasbourg} 
-\date{\vspace{2.5in}
-	
+\date{\vspace{0.8in}
+
+  \includegraphics[width=4cm]{img/uds.jpg} % also works with logo.pdf
 \protect\raggedright
 {\normalsize Maître d'alternance:} \\
 		\textbf{Pierre Collet}, Université de Strasbourg \\
@@ -98,77 +106,97 @@ better population diversity and overall results.
 Evolutionary algorithm, genetic algorithm, local search, GPGPU, NSGA, ASREA, multi-objective optimization, pareto selection, vehicle routing problem with time windows, Pickup-delivery, heterogeneous fleet.
 \newpage
 \section{Introduction}
-Planning of large instance remains an open field of research. The particular
+Planning of large routing instance remains an open field of research. The particular
 problem of vehicle routing of healthcare service is twofold: due to its
 various constraints it is difficult to extract to ontology needed for modeling for
 a linear solver and the sheer number of element to optimize make it out of reach for
 the classical exact algorithm, thus the need of powerful heuristics and 
-metaheuristic. The fields of vehicle routing problem (VRP) is composed of numerous variants, each time defining new constraints. The two most commons one are the Capacitated Vehicle Routing Problem (CVRP) and the Vehicle routing problem with time windows (VRPTW).
+metaheuristic. The fields of Vehicle Routing Problem (VRP) is composed of numerous variants, each time defining new constraints. The two most commons one are the Capacitated Vehicle Routing Problem (CVRP) and the Vehicle routing problem with time windows (VRPTW).
 
 \paragraph{CVRP} % (fold)
 \label{par:CVRP}
-In the CVRP variant, the vehicle capacity of "goods" is limited and sometimes the
-good must also be package in the correct of delivery, meaning it involves a knapsack
+In the CVRP variant, the vehicle's capacity of goods is limited and sometimes the
+good must also be packaged in the correct of delivery, meaning it involves a knapsack
 optimisation once the routing is defined.\\
-This problem represents the core of logistics and is prevalent in physical goods transportation. This is also the case
-of our problem as there is a limited number of seats in the vehicles and some
-limitations concerning the ambulances for example, where there can be only one
+This problem represents is prevalent in logistic of physical goods transportation. This is also the case
+of our problem as there is a limited number of seats in the vehicles. We have some
+additional limitations concerning ambulances for example, where there can be only one
 patient at a time, independently of the size of the medical crew.
 % paragraph CVRP (end)
 %Definition of CVRP
 
 \paragraph{VRPTW} % (fold)
 \label{par:VRPTW}
-In the case of delivery to consumer directly arises the question of the delivery
-timing. The VRPTW is a highly constrained problem where the delivery must occur
-at specific time windows. Depending of the criticality of the delivery, systems tend
-to treat windows with more or less flexibility. \\ 
-In our case, the delay penalty on an appointment is weighted its type. The problem definition will be given in much more
-detail in the following section.
+In direct consumer delivery timing are to be respected. VRPTW\footnote{Vehicule
+Routing Problem with Time-Window} is a highly constrained problem where the delivery must occur
+during specific time-windows. Depending of the criticality of the delivery, systems tend
+to treat predefinied time-windows with more or less flexibility. \\ 
+In our case, the delay penalty when missing an appointment's time-window is weighted
+by the type of the appointement. The problem definition in the following section
+will give much more details.
 % paragraph VRPTW (end)
 %Definition of VRPTW
 
 \paragraph{Heterogenous fleet} % (fold)
 \label{par:Heterogenous fleet}
-Problems with heterogeneous fleet add a new set of constraints. The cost of using
+Problems with heterogeneous fleet require to be able to treat a new set of constraints. The cost of using
 the vehicle, its capacity, its crew (the size as well as the diploma and
-authorization required) can depend of the type of vehicle.
+authorization required) can depend of the type of vehicle and thus should be taken
+into account by the search heuristic used.
 % paragraph Heterogenous fleet (end)
 %Variant one : heterogeouns fleet
 
 \paragraph{Multi-depot} % (fold)
 \label{par:Multi-depot}
-The classical definition of the VRP problem states that there is only one depot or
-main station, from which all the vehicle start and must go back after the last
+The classical definition of the VRP problem states that there is only one depot (or
+main station), from which all the vehicle start and must go back after their last
 mission. In the multi-depot variant, the vehicles are assigned to a specific base,
-where they start and end.\\
+where they start and end. This complexify quite a bit the possible solutions.\\
 % paragraph Multi-depot (end)
 %Variant two : Multi-depot
 
+\bigskip
 The more constrained the problem is the smaller the search space will be. This fact
 is easy to demonstrate when graphically solving a linear integer problem with the
-simplex method for example.\\
-In our problem
-
-%Genetic algorithm 
-Distributed 
+simplex\cite{nelder1965simplex} method for example.\\
 
 \section{Context of research}
 \subsection{Synovo} % (fold)
 
-Synovo is a french starup from Strasbourg founded by Jérémy Wies, co-founder, financial and sale director, Michel Lacombe, Buiness Intelligence and Guillaume Phillip, CTO and general director. The company is located in the Meinau neighbourhood, near Couffignal Highschool.\\
-Jérémy Wies is the director and main founder of Synovo SA. Supinfo's alumni, he first founded New Web\footnote{\url{www.new-web.fr}}, specialized in server location and cloud infrastructure for sanitary transportation services and healthcare data before extending its solution to the general audience, then founded Synovo, having good insight of the needs and requirement of Sanitary Transportation Services.\\
-The company is specialized in the management and optimization of healthcare transportation for 6 years. The mains advantages over the competition is the near-automatic logistic management of ambulance fleet. 
+Synovo is a french startup from Strasbourg founded by Jérémy Wies, co-founder,
+financial and sale director, Michel Lacombe, Buiness Intelligence and Guillaume
+Phillip, CTO and general director. The company is located in the Meinau
+neighbourhood, near Couffignal Highschool\footnote{https://goo.gl/maps/TodsimgwbTy}.\\
+Jérémy Wies is the director and main founder of Synovo SAS. Supinfo's alumni, he
+first founded New Web\footnote{\url{www.new-web.fr}}, specialized in server location
+and cloud infrastructure for Sanitary Transportation Services and healthcare data
+before extending its solutions to the general audience. Then founded Synovo, having good insight of the needs and requirement of Sanitary Transportation Services.\\
+The company is specialized in the management and optimization of healthcare
+transportation fleet for more than 6 years. Theirs mains advantages over the
+competition is the near-automatic logistic management of vehicle fleet. 
 \bigskip
 
-Synovo was the fruit of the initiave of its tree co-founder, while student at the Supinfo school, after winnig the first prize of a hackathon organized by trasbourg Startup in 2011. Since then, they continued winning programming and startup talent contest (Yago, Talent des cités, Pépites) and getting investors. Right now, the company have a workforce of more then thirty employee and dozen of client all over France, holding a sum of more than 400 vehicle. \\
-After 3 years of development, the company's main product, Saphir, provide a solution for managing logistic needs encounter on a daily basis by transportation services: taking appointement, tool for communication between operators and driving crews, realtime GPS tracking, comptability and facturation, tool for statistic modeling and BI. \\ 
+Synovo was the fruit of the initiave of its three co-founder, while student at the
+Supinfo school, after winning the first prize of a hackathon organized by Strasbourg
+Startup in 2011. Since then, they continued winning programming and startup talent
+contests (Yago, Talent des cités, Pépites) and getting investors. Right now, the
+company have a workforce of more then forty employee and dozen of client all over
+France, holding a sum of more than 1000 vehicle. \\
+After 3 years of development, the company's main product, Saphir, provide a solution
+for managing logistic needs encounter on a daily basis by transportation services:
+  taking appointement, tool for communication between operators and driving crews,
+  real-time GPS tracking, comptability and facturation, tool for statistic modeling and BI. \\ 
 It is between the frame of the Saphir project that my R\&D project of optimizing routing by genetic algorithm will be integrated. Real-time tracking of information concerning GPS position and status of mission is an essential element needed to provide the dynamic capability of the optimization.\\
-My apprenticeship mentor and direct hierarchical  superior at Synovo is rM. Guillaume Philips.
+My apprenticeship mentor and direct hierarchical superior at Synovo is Mr. Guillaume Philips.
 He is the current CTO and generala director. It is with him that I have most of the discussion concerning technical specifications and report the status of the project. He is also the main manager of the Saphir project.
 
 \bigskip
-The company is currently in a phase of rapid growth, with more than 10 new hires since the beginning of the year. Several internships with candidat from various private software engineering school(Supinfo, Epitec, Exia) complete the workforce. Synovo is strongly tied with association and alumni network in Alsace, with partener such as Alsace Digitale and French Tech Alsace.
+The company is currently in a phase of rapid growth, with more than 10 new hires
+since the beginning of the year. Several internships with candidats from various
+private software engineering school(Supinfo, Epitec, Exia) complete the workforce.
+Synovo is strongly tied with association and alumni network in Alsace, with partener
+such as Alsace Digitale\footnote{http://www.alsacedigitale.org/} and French Tech
+Alsace\footnote{http://www.lafrenchtech-alsace.eu/}.
 
 \paragraph{Development }\label{duxe9veloppement}
 
@@ -181,20 +209,22 @@ The development department has most of the workforce, more than 15 software engi
 The industrialization process have already begin more than a year ago and due to the young age of the product, the support department is still composed in part by C\# developer. This department is somewhat consequent with 8 employee on board. There main task is to filter and process the client feedback and bug report, to explain how to use certain features and to update the client in production. 
 
 
-\paragraph{BI et ergonomie}\label{bi-et-ergonomie}
+\paragraph{BI et ergonomie}\label{bi-and-UX}
 
-Statistical analysis and business Intelligence are conducted by Mr. Michel Lacombe. This small squad (3 employee) also take care of the UI and UX of Saphir and all derivative projects.
+Statistical analysis and business Intelligence are conducted by Mr. Michel Lacombe.
+This small squad (3 employee) also take care of the UI\footnote{User interface} and
+UX\footnote{User experience} of Saphir and all derivative projects.
 
 
 \paragraph{Mobile Android}\label{mobile-android}
 
-2 developer work and the mobile application allowing the driving crew to receive and update the status of missions to the plannification tools proposed by Saphir.
+2 developers work on the mobile application allowing the driving crew to receive and update the status of missions to the plannification tools proposed by Saphir.
 
 \paragraph{R\&D}\label{rd}
 
 The in-house R\&D department was only created when I start working at Synovo.
 Before that, the research department was outsourced to the BFO team of the Icube laboratories. 
-One other developer joined my during my stay:  Mr. Benjamin Chetioui an other apprentice in the same cursus than I.
+One other developer joined my during my stay: Mr. Benjamin Chetioui an other apprentice in the same cursus than I.
 
 
 \label{sub:Synovo}
@@ -203,15 +233,15 @@ One other developer joined my during my stay:  Mr. Benjamin Chetioui an other ap
 \label{sec:Context of research}
 \bigskip
 The main motivation of this research is to automate the whole logistic process of
-transporting patient for a number of reasons. Historically, healthcare transportation
+transporting patient, for a number of reasons. Historically, healthcare transportation
 services could not use any automation due to the large number of physical and legal
 constraints, in particular in France where the state subsides part of the cost
-depending on various complex conditions. This has render impossible the usage of
+depending on various complex conditions. This has rendered impossible the usage of
 more traditional and top of the shelf solutions available for the goods
 transportation industry. Synovo, through its main product Saphir, an ERP-like tool
 to manage the whole transportation company, tries to push the full automation of the
 industry. \\
-The last remaining parts still extensively done by humans operators are planning the
+The last remaining parts still extensively done by humans operators are : planning the
 next day and doing real-time routing and problem solving during the day, two type of
 work that our novel algorithm tackles efficiently. The main goals to achieve are the
 following:
@@ -220,12 +250,12 @@ following:
 A good planning that aggressively tries to reduce the number of resources used
 (vehicles, drivers, crews) can lead to massive saving for the transportation company
 as well as improving the working condition of the current employee and preserving
-the actual material.
+the company hardware and vehicle.
 % paragraph Economic (end)
 \paragraph{Speed} % (fold)
 \label{par:Speed}
 For a small company, the average workload is about 100 to 200 missions (or journeys)
-per day. For planning such day, it take around one very focused hour for a human
+per day. For planning such day, it take around one hour of very focused work for a human
 operator or regulator, while he is still interrupted by calls concerning the current
 day. Before having a working planning for the next day, the company can not yet
 tell its drivers and employees the beginning of their shifts. Having fast answer,
@@ -237,25 +267,23 @@ Due to the high cognitive demand of such work, the efficiency of the planning de
 in great part from the wellness of the regulator. While they are able to maintain
 high quality planning during the work, this type of job is very exhausting on
 the person. Algorithmic solutions will always be constant in quality, and will
-free the regulator of doing his actual job of taking care of humans problem and
-unforeseeable incidents on the field.
+free the regulator to dohis actual job: i.e taking care of humans problem and
+unforeseeable incidents on the ground.
 
 % paragraph Efficicy (end)
 
 \subsection{Problem definition}
-The problem can be characterised as a Multi-depot Capacitated Heterogeneous Pickup
+The problem can be caracterised as a Multi-depot Capacitated Heterogeneous Pickup
 Delivery Vehicle routing problem with time windows (MCHPDVRPTW). \\
 Formally it can be described this way: given a set of appointments, find the routing that minimizes the
 delay and lateness to serve mission, minimize the number of used vehicle, minimize
 the number of used employees, while avoiding using the wrong type of vehicle,
 violating legal constraints on the crews (pauses, total working time) and the number
 of maximal patients in the vehicle.\\
-Here is the mathematical formulation of the problem:
-% Math relou ici 
-%
-%
-\\
-\\
+The mathematical formulation of the problem have being done numerous
+time\cite{desaulniers2000vrp}.
+
+\bigskip
 The end goal is to be able to provide efficient optimization of the whole day in
 less than 5 minutes. That is given a set of missions, a fleet of available vehicles
 and employees to get a feasible and at least human comparable planning if not
