@@ -28,11 +28,11 @@
 \setcounter{figure}{0}
 \renewcommand{\thesection}{\arabic{section}}
 
-\makepagestyle{mystyle}
-\makeevenhead{mystyle}{\thepage}{}{\includegraphics[height=45pt]{img/logo.png}}
-\makeoddhead{mystyle}{\includegraphics[height=45pt]{img/logo.png}}{}{\thepage}
+%\makepagestyle{mystyle}
+%\makeevenhead{mystyle}{\thepage}{}{\includegraphics[height=45pt]{img/logo.png}}
+%\makeoddhead{mystyle}{\includegraphics[height=45pt]{img/logo.png}}{}{\thepage}
 
-\pagestyle{mystyle}
+%\pagestyle{mystyle}
 
 \begin{document}
 
@@ -45,7 +45,9 @@
 \author{Joseph Pallamidessi\\ University of Strasbourg} 
 \date{\vspace{0.8in}
 
-  \includegraphics[width=4cm]{img/uds.jpg} % also works with logo.pdf
+\includegraphics[width=5cm]{img/uds.jpg} % also works with logo.pdf
+
+\vspace{0.8in}
 \protect\raggedright
 {\normalsize Maître d'alternance:} \\
 		\textbf{Pierre Collet}, Université de Strasbourg \\
@@ -55,6 +57,7 @@
 \newpage
 
 \tableofcontents*
+
 \newpage
 
 
@@ -104,7 +107,9 @@ speed-up ranging for 4 to 50 times faster than the NSGAII algorithm while provid
 better population diversity and overall results.
 \paragraph{Keywords}
 Evolutionary algorithm, genetic algorithm, local search, GPGPU, NSGA, ASREA, multi-objective optimization, pareto selection, vehicle routing problem with time windows, Pickup-delivery, heterogeneous fleet.
+
 \newpage
+
 \section{Introduction}
 Planning of large routing instance remains an open field of research. The particular
 problem of vehicle routing of healthcare service is twofold: due to its
@@ -159,6 +164,8 @@ where they start and end. This complexify quite a bit the possible solutions.\\
 The more constrained the problem is the smaller the search space will be. This fact
 is easy to demonstrate when graphically solving a linear integer problem with the
 simplex\cite{nelder1965simplex} method for example.\\
+
+\newpage
 
 \section{Context of research}
 \subsection{Synovo} % (fold)
@@ -373,6 +380,8 @@ problem. In pickup-delivery problem, the vehicle must transport "load" (here, a
 patient), without any intermediary pause, stop, change of vehicle or unloading
 between the pickup phase (the origin point) and the delivery (destination).
 
+\newpage
+
 \section{State of the project}
 In September 2015, we did have a working prototype as advertised in the preceding
 thesis. The core ideas and techniques have not changed between last year version
@@ -443,7 +452,7 @@ with a \textit{Python} implementation combined with the evolutionary framework
 dataset. Once the results where validated, we ported our Python implementation to C++,
 encoutering some difficulties on the way due to its reliance on dynamic data structure,
 forbidden (or at least very complicated to get good performance from) on GPGPU architecture.\\
-This C++ implémentation was a performance disaster on GPGPU unit due to its excessive
+This C++ implementation was a performance disaster on GPGPU unit due to its excessive
 divergence (code branching) and the need of dynamic memory allocation.  
 
 
@@ -556,17 +565,18 @@ hull\cite{godfrey2007algorithms} in a \textit{n}-dimension space, given \textit{
 
 \label{par:Multi-objective selection }
 
+\newpage
 
 \section{Local searches}
 By design genetic algorithm provide good exploration of the search space, meaning
-that they sample the fitness landscape in a coarse-grain fashion.
-The mutation operator setup in the evolutionary loop, provide the smaller step
+that they sample the fitness landscape in a coarse-grained\cite{mitchell1998introduction} fashion.
+The mutation operator set up in the evolutionary loop, provide the smaller step
 of the sampling also called "exploitation". The main difficulty when trying to 
-solve a problem using stochastic methods or using machine learning is to have a
+solve a problem using stochastic methods or machine learning is to have a
 good ratio between exploitation and exploration. This is often referred in the
 literature as the exploitation/exploration problem. If the exploitation is too high,
 the search will be quickly stuck in local optimum and if the exploration is too high
-the search will not converge to any useful result. \\
+the search will not converge to any useful result\cite{mitchell1998introduction}. \\
 With the exception of the mutation operators described before, the first part of this
 thesis was focused in the exploration part of the algorithm, implemented last year.
 In this section we will describe the work done on creating and adapting popular local
@@ -574,13 +584,16 @@ search methods in VRP and travelling salesman problem to our specific problem as
 optimization often require to be help with a set of local search algorithm, small heuristics and brute force methods.
 
 \subsection{2-opt* for pickup-delivery}
-The 2-opt* local search consist of exchanging two nodes form two different routes. If the newly defined routes
+The 2-opt* local search consist of exchanging two nodes from two different routes. If the newly defined routes
 produced a better global solution as defined by the evaluation function (in the basic formulation of TSP
-the new solution produced a shorter global solution in distance) ??MISSING END OF SENTENCE??
+the new solution produced a shorter global solution in distance) it greedily replaced the old
+one. In this section we will learn how we were able to modify a common VRP local
+search to make it fit better our problem.
 
 
 \subsubsection{Base algorithm}
-To avoid unnecessary computation the algorithm uses the concept of triangular irregularity
+To avoid unnecessary computation, the algorithm uses the concept of triangular
+irregularity\cite{li2003local}
 between the old and new edges after reorganization. By doing this, there is no need to
 evaluate the whole solution after each swapping, only the locally changed resulting edge.\\
 \\
@@ -597,7 +610,8 @@ Here the formulation of the algorithm.
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width=4in]{img/2-opt.png}
-		\caption{Best Cost Route Cross-over.}
+		\caption{A standard case resolved by the 2-opt algorithm. On the only route, the edge $i,i+1$  and
+    $j,j+1$ we be replaced by the edge $i,j+1$ and $j,i+1$.}
 	\end{center}
 \end{figure}
 \subsubsection{2-opt*}
@@ -612,6 +626,9 @@ The reformulation of the algorithm is the following:
 	\begin{center}
 		\includegraphics[width=4in]{img/2-opt-star.png}
 		\caption{Best Cost Route Cross-over.}
+		\caption{A standard case resolved by the 2-opt* algorithm. The edge $i,i+1$ from
+    route 1 and $j,j+1$ from route 2 we be replaced by the edge $i,j+1$ on route 1
+    and $j,i+1$ on route 2.}
 	\end{center}
 \end{figure}
 \subsubsection{PD-flavored version}
@@ -628,12 +645,15 @@ The reformulation of the algorithm is the following:
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width=4in]{img/2-opt-star-pd.png}
-		\caption{Best Cost Route Cross-over.}
+		\caption{The  standard case resolved by the 2-opt*-pd algorithm. The edge $i,i+1$ from
+    route 1 and $j,j+1$ from route 2 we be replaced by the edge $i,j+1$ on route 1
+    and $j,i+1$ on route 2, only if contraints on node $i-2,i+2,j-2,j+2$ are
+    satisfied after the swap.}
 	\end{center}
 \end{figure}
 
 \subsection{Intra route}
-The basis of this heuristic picks two routes randomly and swaps two nodes from each route.
+The basis of this heuristic\cite{tan2003multiobjective}, picks two routes randomly and swaps two nodes from each route.
 Without modification this really simple heuristic will not often produce legal solution in
 the project context. We extended it by all swapping the other node of the journey with each other.\\
 This is more a mutation than an heuristic as no score are recomputed in any way. The time-windows conditions
@@ -642,12 +662,14 @@ for time-windows before the evaluation phase.\\
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width=6in]{img/intra.png}
-		\caption{Best Cost Route Cross-over.}
+		\caption{On the left, if the element of the journey to swap are adjacent, we
+    simply swap them in-place. On the right, we also swap them in-place if they are
+    not.}
 	\end{center}
 \end{figure}
 
 \subsection{RAR}
-An other mutation-like operator implemented the Remove and Reinsert one. It consists of selecting randomly one node
+An other mutation-like operator implemented the Remove and Reinsert\cite{tan2003multiobjective} one. It consists of selecting randomly one node
 in a route and inserting it back to another one. Like the others, a small adaptation was necessary.
 We also remove and reinsert the sister element of the selected node. This operator is a mean
 to increase the solution diversity efficiently. Contrarily to the actual algorithm, no feasibility checks are
@@ -657,12 +679,13 @@ the evaluation phase, coming right after all local searches. \\
 \begin{figure}[htbp]
 	\begin{center}
 		\includegraphics[width=6in]{img/rar.png}
-		\caption{Best Cost Route Cross-over.}
+		\caption{After selecting the element randomly, we remove it, along with its
+    other related elements, to end or the begin of an other route.}
 	\end{center}
 \end{figure}
 
 \subsection{Spliting and merging}
-Route splitting and merging follow the same logic of the Remove and Reinsert operator.\\
+Route splitting and merging\cite{tan2003multiobjective} follow the same logic of the Remove and Reinsert operator.\\
 Instead of a single node it does operate on whole section of the route. A whole section
 is removes from the original route to be reinserted to another one. Splitting and Merging are
 dual operations in the mathematical sense of the term.\\
@@ -680,27 +703,28 @@ resource minimization in mind and thus is not useful when minimizing it.
 	\begin{subfigure}{.5\textwidth}
                         \centering
 			\includegraphics[width=2.7in]{img/merge.png}
-			\caption{Best Cost Route Cross-over.}
+			\caption{Case a) adjacents elements. After randomly choosing a cutting point, we move the remaining
+      elements and theirs relatied element to an other route }
 	
 	\end{subfigure}%
 	\begin{subfigure}{.5\textwidth}
                         \centering
 			\includegraphics[width=2.7in]{img/merge-simple.png}
-			\caption{Best Cost Route Cross-over.}
+			\caption{Case b) scattered elements. After randomly choosing a cutting point, we move the remaining
+      elements and theirs relatied element to an other route }
 
 	\end{subfigure}
 \end{figure}
 
 
 \subsection{Fuzzing}
-The fuzzing mechanism is one of the most important work done concerning the quality and concrete use
-of the algorithm as it reproduces part of the methodology used by the human operator. By design the algorithm
-avoids breaking all order accordingly with the partial order on the time-windows.\\
-In real planning, the
-appointments are taken sometimes weeks before they actually happen, often with limited vision of the future
-planning for the days. With restricted resources, big delay or hard constraints can remain unsatisfied if
-the problem is optimised head-on. For instance, if only three ambulances are provided and four journeys for ambulances
-start at the exact same time given that ambulance in all possible configurations can only carry one passenger
+The fuzzing mechanism is one of the most important work done concerning the quality and concret use
+of the algorithm as it reproduces part of the methodology used by human operator. By design the algorithm
+avoids breaking all orders accordingly to the partial order on the time-windows.\\
+In real planning, the appointments are taken sometimes weeks before they actually
+happen, often with limited vision of will look the future plannification. With restricted resources, big delay 
+or hard constraints can remain unsatisfied if the problem is optimised head-on. For instance, if only three ambulances 
+are provided and four journeys for ambulances start at the exact same time, given that ambulance in all possible configurations can only carry one passenger
  (equivalent of taking one journey) at a time, the following case will occur:
 \begin{itemize}
   \item A concurrent journey with ambulance, breaking the load hard constraint on ambulance
@@ -724,6 +748,8 @@ have a drawback: it increases in a drastic and exponential manner the number of 
 what is only bound by the convergence of the evolutionary process.\\
 Graph
 
+\newpage
+
 \section{Result}
 \subsection{Metrics definitions}
 For further assessing the quality of the result without cluttering and losing sight
@@ -743,7 +769,7 @@ To also give an idea of the state of the evolution, we decided to only plot the 
 fitness allowing the operator to know when convergence has occurred.
 Screenshot of the interface
 \subsection{G-ASREA vs NSGAII}
-\subsubsection{Sélection et ranking : NSGAII et
+\subsubsection{Selection and ranking : NSGAII and
 	ASREA}\label{suxe9lection-et-ranking-nsgaii-et-asrea}
 
 One of the main selling point of our implementation, in order to get tremendous speed-up,
@@ -773,9 +799,11 @@ The speed-up of \emph{ASREA} against \emph{G-ASREA} are quite high, up to two or
 	\end{center}
 \end{figure}
 
+\bigskip
 Mr. Collet gave me a base implementation of \emph{ASREA} on \textit{GPU}. The algorithm code was strongly
 coupled with a synthetic benchmarking program of (\emph{ZDT functions\cite{zitzler2000comparison}}).
 
+\bigskip
 We continued our work of paralelisation of \textit{G-ASREA}, to be able to run the integrality of the ranking
 inside the scope of a \textit{GPU}. After extraction, refactor and heavy adaption, we could get the following 
 
@@ -793,7 +821,6 @@ inside the scope of a \textit{GPU}. After extraction, refactor and heavy adaptio
 	\captionof{table}{Temps de la sélection, moyennes sur 50 générations.}
 \end{center}
 
-\subsubsection{Execution time}
 The main selling point of ASREA is its relatively low complexity O(man), one degree below that of a NSGA O(n2).
 This permits much higher size of population resulting in a increase of diversity. By having a high diversity
 among individual, the optimization is much better at avoiding local optimum and lessens the risk of premature
@@ -814,12 +841,15 @@ to survey directly. While human operators have difficulties visualizing the plan
 itself, they are also the one knowing about their company specificity and all the edge cases not covered directly by
 the algorithm, i.e a patient traveling only with a specific crew because of implicit reason (language, habit) or the company
 not allowing or promoting certain types of configuration.\\
-\\
+
+\bigskip
 Thus the algorithm only serves as base planning, that need to be review by a human operator in order to correct
 the obvious changes of specification. However, it does all the heavy lifting in a reasonable time (less than one minute
 for the whole day) with the correction taking five to ten minutes of mildly intensive work, given that by hand, the same planning
 should have took one hour of intensive work. When doing planning with the help of the algorithm, one can expect a smaller
 cognitive workload and saving up to 3//4 of the needed time.  
+
+\newpage
 
 \section{Deployement and architecture}
 
@@ -867,6 +897,8 @@ correspond with the drivers installed on the host.
 The price tag of Amazon EC2 is what blocks us from using it: the optimization must
 run at all time in real-time continuous mode, and the average price of GPU instance
 is around 0.3 dollars per hour and per client.
+
+\newpage
 
 \section{Role}
 
@@ -924,7 +956,8 @@ To be able to fill the role it was a priority to get to know and expand some dom
 software engineering that I had not previously touched. \\
 Those unknowns subject were more specifically related to the "Ops" part of the "devOps"
 job: managing machines, server, monitoring production system, orchestration, logging, and so on.\\
-\\
+
+\bigskip
 One detail that struck me a bit was that when I were not around or not focus on the job,
 the project seemed to lose its momentum due to the lack of leadership. This feeling
 remained until the beginning of July, with the now working and in production GPGPU
@@ -950,6 +983,10 @@ working modules and ideas, but in fine, it is by reshuffling and reinventing the
 \end{itemize}
     
 
+\newpage
+
+\newpage
+
 \section{Conclusion}
 
 The ILC master is, at the time of writing this memoir, my best professional and personal experience.
@@ -960,7 +997,6 @@ itself and how it was conducted, the work and research done in both the public a
 what it did make me learning from the personal standpoint, the good it provided for my future career and finally a
 reflection on the importance of automating tasks in the current economic context.\\
 \\
-
 %% Super master
 This type of formation is extremely important as it gives the student clear entry in the corporate world while
 still providing a high-level academic education. In France, we should clearly put an emphasis on this type of education.\\
@@ -992,7 +1028,6 @@ This project holds a special interest, in the mist of the current economic conte
 of the probable paradigm shift of mass automating of services and means of production. It removes painful and repetitive task
 with a high level of cognitive load, enabling the human to more interesting and diverse task instead.
 From the economic standpoint, it also allows the company to save money on the routing itself and on the human work required to get planning. \\
-\\
 
 \bibliographystyle{plain}
 \bibliography{thesis}
