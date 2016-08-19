@@ -233,7 +233,7 @@ One other developer joined my during my stay: Mr. Benjamin Chetioui an other app
 \label{sec:Context of research}
 \bigskip
 The main motivation of this research is to automate the whole logistic process of
-transporting patient, for a number of reasons. Historically, healthcare transportation
+transporting patients, for a number of reasons. Historically, healthcare transportation
 services could not use any automation due to the large number of physical and legal
 constraints, in particular in France where the state subsides part of the cost
 depending on various complex conditions. This has rendered impossible the usage of
@@ -242,7 +242,7 @@ transportation industry. Synovo, through its main product Saphir, an ERP-like to
 to manage the whole transportation company, tries to push the full automation of the
 industry. \\
 The last remaining parts still extensively done by humans operators are : planning the
-next day and doing real-time routing and problem solving during the day, two type of
+next day, doing real-time routing and problem solving during the day, two type of
 work that our novel algorithm tackles efficiently. The main goals to achieve are the
 following:
 \paragraph{Economic} % (fold)
@@ -285,22 +285,23 @@ time\cite{desaulniers2000vrp}.
 
 \bigskip
 The end goal is to be able to provide efficient optimization of the whole day in
-less than 5 minutes. That is given a set of missions, a fleet of available vehicles
-and employees to get a feasible and at least human comparable planning if not
+less than 5 minutes. Given a set of missions, a fleet of available vehicles
+and employees we will get a feasible and at least human comparable planning, if not
 better. \\
-The difficulty of such optimisation is the fact ??the in?? must optimise the vehicles
-route and the employees (crews). We wanted here to take a global approach as the two
-goes together and influence each other in an antagonistic way in some cases, depending
-on the dataset. In more ancient real-world examples, the routes are optimized alone
-or with very few heuristics, and a second optimisation was done on top of the results
-of the first one. Such techniques, even if feasible and easy to implement or test,
-break the promise of globally optimising the problem.\\
-That is why a multi-objective was chosen. Compared to the first working prototype
+The difficulty of such optimisation is the fact that we must optimise the vehicle's
+routes along the employee's (crews) schedule. Here, we take a global approach as the
+two optimisation problems should be solved together and influence each other,
+sometime in an antagonistic way, depending on the dataset. In more ancient real-world examples,
+only the routes were optimized with very few heuristics, and a second optimisation was done on top of the results
+of the first one. Such techniques, even if feasible,easy to implement and to test,
+break the whole promise of globally optimising the problem.\\
+That is why a multi-objective approach was chosen. Compared to the first working prototype
 of august 2015, we changed the objective to the three following one:
 
 \paragraph{Employee} % (fold)
 \label{par:Employee}
-The goal of this fitness is the reduced "cost" of the employee:
+The goal of this fitness is the reduced "cost" of the employee, i.e the number of
+minutes before and after their predefined working range.
 
 % paragraph Employee (end)
 
@@ -316,29 +317,30 @@ logistic point-of-view. This means:
 
 \paragraph{Load} % (fold)
 This fitness is kept simple in opposition to the two first which are agglomerations
-of different smaller fitnesses working positively correlated together. It only
-evaluates the capacity of the vehicle or more exactly the overloads.
+of different smaller fitness positively correlated together. It only
+evaluates the capacity of the vehicle, or more explicitly the vehicle's overload.
 \label{par:Load}
 
 % paragraph Load (end)
 
 \subsubsection{Healthcare transportation specificities}
 \label{sub:Healthcare transportation specificities}
-In the field, healthcare transportation services take great care of having the best
-quality of service. It is an industry focused on the patient comfort first, due to the
-fact that patients that need transportation tend to be recurrent due to lifelong
-disability or disease, such as dialysed patient which will require transportation three
+In the field, healthcare transportation services usually take great care of having the best
+quality of service possible. It is an industry focused on patient's comfort, due to the
+fact that patients that need transportation tend to need it recurrently due to lifelong
+disability or disease, such as dialysed patient. They require transportation three
 times a week during the rest of their life. \\
 The second most important point is the feasibility of the routing. Healthcare
-transportation services are routinely facing the lack of resource to do all missions
-and while running with low resource margin (fleet size or employees), they are
+Transportation Services are routinely facing their own lack of resource to be able
+to do all missions and while running with low to inexistant resource margin (fleet or employees), they are
 vulnerable to unpredictable incidents (accident on the road, employees not showing
-up).\\
+up, etc\ldots).\\
 
-As already stated earlier, the fleet of a healthcare transportation service is by
-nature heterogeneous. Some patients can only be moved laying, while others can be sitting,
-the required equipment can differ significantly: ranging from nothing to big specialized
-hardware for heavy burned or morbidly obese patients.\\
+\bigskip 
+As already stated earlier, the fleet of a Healthcare Transportation Service is 
+heterogeneous by nature. Some patient can only be moved laying, while others can be
+sitting and  the required equipments can differ significantly: ranging from nothing to big specialized
+hardware for heavy burned or morbidly obese patient.\\
 There are four types of vehicle defined by the french government, hospital and healthcare professionals:
 
 \paragraph{VSL} % (fold)
@@ -350,7 +352,7 @@ patients with low to no physical affliction.
 
 \paragraph{Ambulance} % (fold)
 \label{par:Ambulance}
-Ambulance of heavy duty vehicle required when the patient need to be laying and need
+Ambulance are heavy duty vehicle required when the patient need to be laying and need
 medical attention during the travel. Ambulance are manned by a crew of two persons,
 one driver and one practitioner holding a DEA licence.
 
@@ -361,26 +363,26 @@ also one simple driver which do not require any other licence.
 
   \paragraph{Taxi} % (fold)
 \label{par:Taxi}
-A taxi is analogous with VSL, to the point that some companies don't do any
-distinction between the two. The only difference is about the cost of the mission
+A taxi is analogous with a VSL, to the point that some companies don't make any
+distinction between the two. The only difference is about the cost of the mission,
 due to heavy government subvention when satisfying certain conditions like the total
 distance travel for one mission. The driver do not require any medical licence.\\
 \\
-The problem of patient transportation is modeled as pickup delivery vehicle routing
-problem. In pickup-delivery problem, the vehicle must transport "loads" (here
-patient), without any intermediary pause, stop, change of vehicle or unload
+The problem of patient transportation is modeled as pickup-delivery vehicle routing
+problem. In pickup-delivery problem, the vehicle must transport "load" (here, a
+patient), without any intermediary pause, stop, change of vehicle or unloading
 between the pickup phase (the origin point) and the delivery (destination).
 
 \section{State of the project}
 In September 2015, we did have a working prototype as advertised in the preceding
-thesis. The core ideas and techniques have not changed between last year algorithm
+thesis. The core ideas and techniques have not changed between last year version
 and the current one, but the definition of problem did change considerably. \\
 At first, we tried to map an ontology that was very precise and did integrate a lot
-the domain problematics without any treatment. This led to a sub-optimal solution,
+the domain's problematics without any treatment. This led to a sub-optimal solver,
 because we were more trying to map the ontology of the problem than to solve the
 problem per se. The general confusion around the actual cost of a kilometer for
 one type of vehicle, for example, and the difficulty to get estimation from transportation services
-themselves proved the inefficiency of the way.\\
+themselves proved the inefficiency of this way.\\
 Because of the generic nature of genetic algorithm and meta-heuristic framework, we only
 had to update the domain-specific part of the algorithm: the evaluation procedure.\\
 \\
@@ -392,10 +394,20 @@ novel part of the algorithm.
 \label{sub:Quick introduction to genetic algorithm}
 
 
-Genetic algorithms (GA) are generally used to search the best possible solution to complex inverse problems, whether combinatory or continuous. \\
-They improve  a set of possible solutions in the search space of all possible solutions. Genetic algorithms or evolutionary algorithms are a class of algorithms that have been inspired by the theory of evolution as enounced by Charles Darwin as the \emph{« \textbf{survival of the fittest” principle} »}. \\
-The idea of using and implementing evolutionary algorithms appeared in the late 50’s\cite{john1992adaptation} by trying to to emulate the natural evolutionary model. However, GAs have not become exploitable until the development of sufficiently powerful computers. The similarities with biology are numerous. \\
-Their inner working is conceptually very simple: the answer to the problem is modelled as an  individual. A population of randomly generated individuals is subjected to the following evolutionary loop: crossover, mutation, evaluation and finally selection. We will explain them in detail shortly.
+Genetic algorithms (GA) are generally used to find the best possible solution to complex
+inverse problems, whether combinatory or continuous. \\
+They improve  a set of possible solutions in the search space of all possible solutions.
+Genetic algorithms or evolutionary algorithms are a class of algorithms that have been 
+inspired by the theory of evolution as enounced by Charles Darwin as the 
+\emph{« \textbf{survival of the fittest” principle} »}. \\
+The idea of using and implementing evolutionary algorithms appeared in the 
+late 50’s\cite{john1992adaptation} by trying to to emulate the natural evolutionary model.
+However, GAs have not become exploitable until the development of sufficiently powerful 
+computers. The similarities with biology are numerous. \\
+Their inner working is conceptually very simple: the answer to the problem is modelled
+as an  individual. A population of randomly generated individuals is subjected to the
+following evolutionary loop: crossover, mutation, evaluation and finally selection.
+We will explain them in detail shortly.
 
 
 
@@ -404,15 +416,35 @@ Their inner working is conceptually very simple: the answer to the problem is mo
 \paragraph{Initialisation} % (fold)
 \label{par:Initialisation}
 
-At the start of the algorithm,  the initial population is defined by creating and initializing random individual. GA  need quick, uniform and good pseudo-random number generator in order to guarantee an universal sampling of the search space such as Mersenne Twister or more recently xorshift. \\
-Depending of the problem to be optimized and its domain, it is sometimes efficient to guide the evolution since its first step by conditioning the initialization of the initial individual. Furthermore, one can initialize the population with good solution from a precedent run. Those bias have the unfortunate tendencies to drastically reduce the diversity of the evolution, yielding sub-optimal results and reducing the overall algorithm’s creativity.
+At the start of the algorithm, the initial population is defined by creating and 
+initializing random individual. GA need quick, uniform and good pseudo-random number
+generator in order to guarantee an universal sampling of the search space such as 
+Mersenne Twister or more recently xorshift. \\
+Depending of the problem to be optimized and its domain, it is sometimes efficient
+to guide the evolution since its first step by conditioning the initialization of
+the initial individual. Furthermore, one can initialize the population with good
+solution from a precedent run. Those bias have the unfortunate tendencies to 
+drastically reduce the diversity of the evolution, yielding sub-optimal results
+and reducing the overall algorithm’s creativity.
 \paragraph{Crossover} % (fold)
 \label{par:Crossover}
-Recombinaison phase (or reproduction, mating, crossing-over) consist of creating new individual (or solution) from one or several parents. There are various type of crossover operator, specifically adapted to certain representation.  Crossover operators must be aware of the structure of the individual and thus is problem specific.
+Recombinaison phase (or reproduction, mating, crossing-over) consist of 
+creating new individual (or solution) from one or several parents. 
+There are various type of crossover operator, specifically adapted to certain 
+representation.  Crossover operators must be aware of the structure of the
+individual and thus is problem specific.
 
-To correct the problem inherent to mono-point cross-over in the context of VRP problem, a more recent and fitted cross-over called \textit{BCRC\cite{ombuki2006multi}} (\emph{Best cost route cross-over}) was selected by my own initiative. \\
-There was no available implementation of the BCRC crossover. We first prototyped it with a \textit{Python} implementation combined with the evolutionary framework \emph{DEAP} on a standard synthetic benchmarking problem from the Solomon\cite{solomon1987algorithms} dataset. Once the results where validated, we ported our Python implementation to C++, encoutering some difficulties on the way due to its reliance on dynamic data structure, forbidden (or at least very complicated to get good performance from) on GPGPU architecture.\\
-This C++ implémentation was a performance disaster on GPGPU unit due to its excessive divergence (code branching) and the need of dynamic memory allocation.  
+To correct the problem inherent to mono-point cross-over in the context of VRP 
+problem, a more recent and fitted cross-over called \textit{BCRC\cite{ombuki2006multi}}
+(\emph{Best cost route cross-over}) was selected by my own initiative. \\
+There was no available implementation of the BCRC crossover. We first prototyped it
+with a \textit{Python} implementation combined with the evolutionary framework
+\emph{DEAP} on a standard synthetic benchmarking problem from the Solomon\cite{solomon1987algorithms}
+dataset. Once the results where validated, we ported our Python implementation to C++,
+encoutering some difficulties on the way due to its reliance on dynamic data structure,
+forbidden (or at least very complicated to get good performance from) on GPGPU architecture.\\
+This C++ implémentation was a performance disaster on GPGPU unit due to its excessive
+divergence (code branching) and the need of dynamic memory allocation.  
 
 
 \begin{figure}[htbp]
@@ -426,38 +458,72 @@ This C++ implémentation was a performance disaster on GPGPU unit due to its exc
 \paragraph{Mutation} % (fold)
 \label{par:Mutation}
 
-Mutation operators provided means to randomly alter children  individual in order to improve the exploitation of the search space, where some “valley” are not accessible by any recombinaison of the current gene pool, if some gene where not in the initial population by example.
+Mutation operators provided means to randomly alter children individual in order
+to improve the exploitation of the search space, where some “valley” are not 
+accessible by any recombinaison of the current gene pool, if some gene where
+not in the initial population by example.
 Mutation operators are domains and problems specifics, depending of the genome representation.
 
 \paragraph{Evaluation} % (fold)
 \label{par:Evaluation}
-The evaluation function is the most important part of GAs, since they guide the evolutionary process to incrementally better solutions. It allows us to assign a score to the individual in regard to the problem at hand. We call that score the fitness of the individual. \\
-The fitness function represents the search space and describe the fitness landscape by sampling and extrapolating it by the means of a population of individual. « Visually », the algorithm try the most intersting places of its search space (also called valley when minimizing).
+The evaluation function is the most important part of GAs, since they guide the 
+evolutionary process to incrementally better solutions. It allows us to assign 
+a score to the individual in regard to the problem at hand. We call that score
+the fitness of the individual. \\
+The fitness function represents the search space and describe the fitness landscape
+by sampling and extrapolating it by the means of a population of individual.
+« Visually », the algorithm try the most intersting places of its search space (also called valley when minimizing).
 
 
 \paragraph{Multi-objective selection } % (fold)
 
 Before starting the next iteration in the generational loop, we must first selected the new « parents
-» individual (surviving ones) from the set ($\lambda$ + $\mu$) of children individual $\lambda$ and parent $\mu$ of the current generation. The number of individual selected this way is equal to the original size of the parent population  $\mu$. \\
-Selection procedure are based on the \emph{fitness} of individual. However, this simplistic approach were only the best (more fitted) individual are selected, i.e after sorting, yield to premature convergence.
+» individual (surviving ones) from the set ($\lambda$ + $\mu$) of children
+individual $\lambda$ and parent $\mu$ of the current generation. The number 
+of individual selected this way is equal to the original size of the parent population  $\mu$. \\
+Selection procedure are based on the \emph{fitness} of individual. However,
+this simplistic approach were only the best (more fitted) individual are selected,
+i.e after sorting, yield to premature convergence.
 
 
 \bigskip
 During the selection process, it is necessary to keep  
-Lors du processus de sélection, il est nécessaire de garder des ``good enough\cite{sharma2010archived,deb2002fast}'' individual which help maintening some sort of diversity in the global population, to the contrary of deterministic methods. \\
-The best selection mecanism are in the most part stochastic like the common but efficient tournament selection, selecting the best individual from a random set of n elements. 
-There are much difference when dealing with multi-objective optimimization(\emph{MOEA\footnote{Multi Objective Evolutionary Algorithm}}). The core concepts will be discussed below.
+Lors du processus de sélection, il est nécessaire de garder des 
+``good enough\cite{sharma2010archived,deb2002fast}'' individual
+which help maintening some sort of diversity in the global population,
+to the contrary of deterministic methods. \\
+The best selection mecanism are in the most part stochastic like the 
+common but efficient tournament selection, selecting the best individual
+from a random set of n elements. There are much difference when dealing with 
+multi-objective optimimization(\emph{MOEA\footnote{Multi Objective Evolutionary
+Algorithm}}).\\
+The core concepts will be discussed below.
 
 
 
 \paragraph{Optimisation
 multiobjectif}\label{optimisation-multiobjectif}
-The main interest of using genetic algorithm instead of other meta-heuristics come from the fact that obtained results exhibit creativity and are competitive with human intelligence. Once a certain number of generation is reached and even with randomly initialized solution, we are able to obtains "good" results. We can only defined them as "good" solution as we have no way to know when the global optimum is reached or if the optimization did get stuck in a local optimum. Traditionally we try to optimize only one criteria (objective), but it is also possible to have several at the same time even antagonistic one. The principal obstacle encountered when doing multiobjectives optimisation is the selection procedure.\\
-When dealing with single objective optimization, the selection is relatively simple: the individuals taken from multiple tournaments. In the context of MOEA, how can we define "good" solution ? Is an individual fully satisfying one criteria better than one mildly satifying all ? The principle between all multi-objective selection operator (\emph{NSGA-II\cite{deb2002fast}, ASREA\cite{sharma2010archived,sharma2010gpgpu}, SPEA}) come from world of economy. It is called \emph{Pareto's optimatity} or \emph{Pareto's dominance.}
+The main interest of using genetic algorithm instead of other meta-heuristics
+come from the fact that obtained results exhibit creativity and are competitive
+with human intelligence. Once a certain number of generation is reached and even
+with randomly initialized solution, we are able to obtains "good" results. We can
+only defined them as "good" solution as we have no way to know when the global optimum
+is reached or if the optimization did get stuck in a local optimum. Traditionally
+we try to optimize only one criteria (objective), but it is also possible to have
+several at the same time even antagonistic one. The principal obstacle encountered
+when doing multiobjectives optimisation is the selection procedure.\\
+When dealing with single objective optimization, the selection is relatively simple:
+the individuals taken from multiple tournaments. In the context of MOEA, how can we
+define "good" solution ? Is an individual fully satisfying one criteria better than
+one mildly satifying all ? The principle between all multi-objective selection operator
+(\emph{NSGA-II\cite{deb2002fast}, ASREA\cite{sharma2010archived,sharma2010gpgpu}, SPEA})
+come from world of economy. It is called \emph{Pareto's optimatity} or \emph{Pareto's dominance.}
 
 \paragraph{Pareto's dominance}\label{dominance-de-pareto}
 
-To Pareto dominate means that for one given solution there are no other solution which have at least one criteria better than his. For \emph{MOEA}, a solution dominate an other if and only if those two condition are satisfied:
+To Pareto dominate means that for one given solution there are no other solution
+which have at least one criteria better than his. For \emph{MOEA}, a solution
+dominate an other if and only if those two condition are satisfied:
 
 
 Dominer au sens de Pareto\cite{voorneveld2003characterization}, pour un élément donné, signifie qu'aucun
@@ -483,16 +549,29 @@ conditions suivantes sont remplies:
 
 % Plus formellement: // formule en laTex
 
-From this definition, we can deduct the concept of \emph{Pareto's Front}: the set of non-dominated solutions. Pareto's front allow us to find good compromise between different criteria's profile. To define a Pareto's front is analogeous to find the convex hull\cite{godfrey2007algorithms} in a \textit{n}-dimension space, given \textit{n} the number of objective.
+From this definition, we can deduct the concept of \emph{Pareto's Front}: the set
+of non-dominated solutions. Pareto's front allow us to find good compromise between
+different criteria's profile. To define a Pareto's front is analogeous to find the convex
+hull\cite{godfrey2007algorithms} in a \textit{n}-dimension space, given \textit{n} the number of objective.
 
 \label{par:Multi-objective selection }
 
 
 \section{Local searches}
-By design genetic algorithm provide good exploration of the search space, meaning that they sample the fitness landscape in a coarse-grain fashion.
-The mutation operator setup in the evolutionary loop, provide the smaller step of the sampling also called "exploitation". The main difficulty when trying to 
-solve a problem using stochastic methods or using machine learning is to have a good ratio between exploitation and exploration. This is often referred in the literature as the exploitation/exploration problem. If the exploitation is too high, the search will be quickly stuck in local optimum and if the exploration is too high the search will not converge to any useful result. \\
-With the exception of the mutation operators described before, the first part of this thesis was focused in the exploration part of the algorithm, implemented last year. In this section we will describe the work done on creating and adapting popular local search methods in VRP and travelling salesman problem to our specific problem as combinatory optimization often require to be help with a set of local search algorithm, small heuristics and brute force methods.
+By design genetic algorithm provide good exploration of the search space, meaning
+that they sample the fitness landscape in a coarse-grain fashion.
+The mutation operator setup in the evolutionary loop, provide the smaller step
+of the sampling also called "exploitation". The main difficulty when trying to 
+solve a problem using stochastic methods or using machine learning is to have a
+good ratio between exploitation and exploration. This is often referred in the
+literature as the exploitation/exploration problem. If the exploitation is too high,
+the search will be quickly stuck in local optimum and if the exploration is too high
+the search will not converge to any useful result. \\
+With the exception of the mutation operators described before, the first part of this
+thesis was focused in the exploration part of the algorithm, implemented last year.
+In this section we will describe the work done on creating and adapting popular local
+search methods in VRP and travelling salesman problem to our specific problem as combinatory
+optimization often require to be help with a set of local search algorithm, small heuristics and brute force methods.
 
 \subsection{2-opt* for pickup-delivery}
 The 2-opt* local search consist of exchanging two nodes form two different routes. If the newly defined routes
@@ -647,8 +726,11 @@ Graph
 
 \section{Result}
 \subsection{Metrics definitions}
-For further assessing the quality of the result without cluttering and losing sight of the logistic feasibility of the solution, we defined a set of metrics that in some cases is redundant with the fitness computation. \\
-The goal of those metrics is to quickly and efficiently compare planning in a coarse-grained fashion. They also allow the operator to rapidly identify exploitable planning.\\
+For further assessing the quality of the result without cluttering and losing sight
+of the logistic feasibility of the solution, we defined a set of metrics that in some
+cases is redundant with the fitness computation. \\
+The goal of those metrics is to quickly and efficiently compare planning in a coarse-grained
+fashion. They also allow the operator to rapidly identify exploitable planning.\\
 Those are actually showed in the algorithm interface. They consist of: 
 \begin{itemize}
   \item The total cumulated minutes of delay
@@ -664,17 +746,25 @@ Screenshot of the interface
 \subsubsection{Sélection et ranking : NSGAII et
 	ASREA}\label{suxe9lection-et-ranking-nsgaii-et-asrea}
 
-One of the main selling point of our implementation, in order to get tremendous speed-up, is having replaced the selection algorithm \emph{NSGA-II\cite{deb2002fast}} with \emph{ASREA\cite{sharma2010archived,tsutsui2013massively}}.\\
+One of the main selling point of our implementation, in order to get tremendous speed-up,
+is having replaced the selection algorithm \emph{NSGA-II\cite{deb2002fast}} with \emph{ASREA\cite{sharma2010archived,tsutsui2013massively}}.\\
 
-\emph{NSGA-II} is the de facto \emph{ranking} and selection algorithm of \emph{MOEA}, withe an asymptotique complexity of O(\emph{mn\^{}2}) given \emph{m} the number of objectives and \emph{n} the number of individual.
-There exist several implementation in \emph{C/C++} of \emph{NSGA-II}, which is why it was used at first as decided by  Mr. Catania.\\
+\emph{NSGA-II} is the de facto \emph{ranking} and selection algorithm of
+\emph{MOEA}, with an asymptotic complexity of O(\emph{mn\^{}2}) given \emph{m}
+the number of objectives and \emph{n} the number of individual.
+There exist several implementation in \emph{C/C++} of \emph{NSGA-II}, which is
+why it was used at first as decided by  Mr. Catania.\\
 
 With population count going higher and higher  (\textgreater{}10 000
 individuals), the execution time taken by \textit{NSGA-II} become a considerable part of the total execution time,
-The main idea behind \textit{NSGA-II} is to get a ordering of rank using the principe of \textit{Pareto dominance} already explained before. I then decide to use \textit{ASREA}, a recent and innovative archive-based ranking algorithm with a complexity in O (\emph{man}) given \emph{a} size of the archive, \emph{m} the number of objectives and \emph{n} the number of individual and its paralellized variant on \emph{GPGPU} , \emph{G-ASREA\cite{sharma2010gpgpu}}.
+The main idea behind \textit{NSGA-II} is to get a ordering of rank using the principe of \textit{Pareto dominance}
+already explained before. I then decide to use \textit{ASREA}, a recent and innovative archive-based ranking algorithm
+with a complexity in O (\emph{man}) given \emph{a} size of the archive, \emph{m} the number of objectives and \emph{n}
+the number of individual and its paralellized variant on \emph{GPGPU} , \emph{G-ASREA\cite{sharma2010gpgpu}}.
 
 \bigskip
-\emph{NSGA,} like \emph{ASREA}, are elitist selection algorithm, the first one by its deterministic ranking and the other by relying on an archive of best previous individual . A more detailed explaination of the two algorithm is available in the annexe. \\ 
+\emph{NSGA,} like \emph{ASREA}, are elitist selection algorithm, the first one by its deterministic ranking and
+the other by relying on an archive of best previous individual . A more detailed explaination of the two algorithm is available in the annexe. \\ 
 The speed-up of \emph{ASREA} against \emph{G-ASREA} are quite high, up to two order of magnitude above. 
 \begin{figure}[htbp]
 	\begin{center}
@@ -683,9 +773,11 @@ The speed-up of \emph{ASREA} against \emph{G-ASREA} are quite high, up to two or
 	\end{center}
 \end{figure}
 
-Mr. Collet gave me a base implementation of \emph{ASREA} on \textit{GPU}. The algorithm code was strongly coupled with a synthetic benchmarking program of (\emph{ZDT functions\cite{zitzler2000comparison}}).
+Mr. Collet gave me a base implementation of \emph{ASREA} on \textit{GPU}. The algorithm code was strongly
+coupled with a synthetic benchmarking program of (\emph{ZDT functions\cite{zitzler2000comparison}}).
 
-We continued our work of paralelisation of \textit{G-ASREA}, to be able to run the integrality of the ranking inside the scope of a \textit{GPU}. After extraction, refactor and heavy adaption, we could get the following 
+We continued our work of paralelisation of \textit{G-ASREA}, to be able to run the integrality of the ranking
+inside the scope of a \textit{GPU}. After extraction, refactor and heavy adaption, we could get the following 
 
 
 \begin{center}
